@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Modele {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;

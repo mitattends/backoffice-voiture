@@ -23,9 +23,7 @@ public class AdminController {
     JwtUtil jwtUtil = new JwtUtil();
 
     @PostMapping(path = "/save")
-    public @ResponseBody ApiResponse addNewAdmin(
-            @RequestParam String username,
-            @RequestParam String password) {
+    public @ResponseBody ApiResponse addNewAdmin(@RequestParam String username, @RequestParam String password) {
         Admin admin = new Admin(username, password);
         adminRepository.save(admin);
         String token = jwtUtil.generate(admin);
