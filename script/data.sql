@@ -18,8 +18,8 @@ insert into axe_details values
 -- Yaris
 
 insert into axe_possible_values values
-('AXV006','MD001', 'AX0001', '150'),
-('AXV007','MD001', 'AX0001', '200'),
+('AXV006','MD0001', 'AX0001', '150'),
+('AXV007','MD0000001', 'AX0001', '200'),
 ('AXV008','MD001', 'AX0002', 'SUV'),
 ('AXV009','MD001', 'AX0002', 'Coupé'),
 ('AXV010','MD001', 'AX0002', 'Convertible'),
@@ -55,11 +55,11 @@ insert into axe_possible_values values
 
 -- Sprinter
 insert into axe_possible_values values
-('AXV036','MD003', 'AX0001', '200'),
-('AXV037','MD003', 'AX0001', '250'),
-('AXV038','MD003', 'AX0002', 'SUV'),
-('AXV039','MD003', 'AX0002', 'Coupé'),
-('AXV040','MD003', 'AX0002', 'Convertible'),
+('AXV036','MD0003', 'AX0001', '200'),
+('AXV037','MD0003', 'AX0001', '250'),
+('AXV038','MD0003', 'AX0002', 'SUV'),
+('AXV039','MD0003', 'AX0002', 'Coupé'),
+('AXV040','MD0003', 'AX0002', 'Convertible'),
 ('AXV041','MD003', 'AX0003', 'Essence'),
 ('AXV042','MD003', 'AX0003', 'Diesel'),
 ('AXV043','MD003', 'AX0004', '130'),

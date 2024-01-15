@@ -1,3 +1,4 @@
+
 create table utilisateur(
     id_utilisateur varchar(20) primary key,
     nom varchar(200),
