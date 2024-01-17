@@ -12,7 +12,6 @@ import java.util.Map;
 @Setter
 public class AnnonceForm {
 
-    String idUtilisateur;
     String selectedModel;
     String annee;
     String kilometrage;
@@ -21,7 +20,7 @@ public class AnnonceForm {
     String[] image;
     List<AxeValues> axeValues;
     public AnnonceForm(){}
-    public AnnonceForm(String selectedModel, String annee, String kilometrage, String prix, String description, List<String> image, List<String> axeValues) {
+    public AnnonceForm(String selectedModel, String annee, String kilometrage, String prix, String description, List<String> image, List<String> axeValues, String token) {
         this.selectedModel = selectedModel;
         this.annee = annee;
         this.kilometrage = kilometrage;

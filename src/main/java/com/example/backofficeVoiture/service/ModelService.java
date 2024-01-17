@@ -20,8 +20,7 @@ public class ModelService {
     public void buildModele(List<Modele> modeleList, List<AxeDetails> axeDetailsList, List<AxePossibleValues> axePossibleValues){
         for (Modele modele: modeleList) {
             modele.idMarque = modele.getMarque().getIdMarque();
-            modele.setAxeDetailsAxeList(axeDetailsList); // set all the parameter
-            // get possible value by idaxe and idmodele
+            modele.setAxeDetailsAxeList(axeDetailsList);
             modele.setAxeDetailsListPossibleValues(axePossibleValuesRepository.getAxePossibleValuesByModele(modele));
             modele.rectifyData();
         }

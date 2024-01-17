@@ -18,8 +18,13 @@ public class AnnonceController {
     public ApiResponse getData(){
         return annonceService.annonceFormData();
     }
+    @GetMapping("/{token}")
+    public ApiResponse getDataByUser(@RequestHeader("Authorization") String token){
+        return annonceService.obetnirAnnonces(token);
+    }
     @PostMapping
-    public ApiResponse sendData(@RequestBody AnnonceForm annonceForm){
-        return annonceService.insererAnnonce(annonceForm);
+    public ApiResponse sendData(@RequestBody AnnonceForm annonceForm, @RequestHeader("Authorization") String token){
+        System.out.println(token);
+        return annonceService.insererAnnonce(annonceForm, token);
     }
 }

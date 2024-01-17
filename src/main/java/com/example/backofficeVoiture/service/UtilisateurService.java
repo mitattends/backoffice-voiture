@@ -19,7 +19,6 @@ public class UtilisateurService {
     }
 
     public ApiResponse verifyToken(String token){
-        token = token.replace("Bearer ", "");
         ApiResponse apiResponse = new ApiResponse();
         try{
             Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
@@ -38,6 +37,7 @@ public class UtilisateurService {
             if(utilisateur == null) throw new Exception("Authentification failed.");
             String token = new JwtUtil().userToken(utilisateur);
             apiResponse.addData("token", token);
+            System.out.println("token provide "+token);
             apiResponse.addData("utilisateur", utilisateur);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());

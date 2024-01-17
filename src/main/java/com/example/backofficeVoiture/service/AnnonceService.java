@@ -5,6 +5,7 @@ import com.example.backofficeVoiture.form.AnnonceForm;
 import com.example.backofficeVoiture.repos.*;
 import com.example.backofficeVoiture.response.AnnonceFormData;
 import com.example.backofficeVoiture.util.ApiResponse;
+import com.example.backofficeVoiture.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,21 @@ public class AnnonceService {
     DetailsModelService detailsModelService;
     @Autowired
     UtilisateurService utilisateurService;
-    public ApiResponse insererAnnonce(AnnonceForm annonceForm){
-        System.out.println("tafiditra");
+    public ApiResponse obetnirAnnonces(String token){
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
+            utilisateur = utilisateurService.getUserById(utilisateur.getIdUtilisateur());
+            List<Annonce> annonces = annonceRepository.findAnnonceByUtilisateur(utilisateur);
+            apiResponse.addData("annonces", annonces);
+            apiResponse.setMessage("success");
+        } catch (Exception e){
+            apiResponse.setMessage("something whent wrong");
+            apiResponse.addData("error", e.getMessage());
+        }
+        return apiResponse;
+    }
+    public ApiResponse insererAnnonce(AnnonceForm annonceForm, String token){
         ApiResponse apiResponse = new ApiResponse();
         try{
             Annonce annonce = new Annonce();
@@ -39,7 +53,9 @@ public class AnnonceService {
             annonce.setKilometrage(annonceForm.getKilometrage());
             annonce.setDescription(annonceForm.getDescription());
             annonce.setEtat(10);
-            annonce.setUtilisateur(utilisateurService.getUserById(annonceForm.getIdUtilisateur()));
+            Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
+            utilisateur = utilisateurService.getUserById(utilisateur.getIdUtilisateur());
+            annonce.setUtilisateur(utilisateur);
             annonceRepository.save(annonce);
             photoService.insertMultiplePhoto(annonceForm, annonce);
             detailsModelService.insert(annonceForm, annonce);

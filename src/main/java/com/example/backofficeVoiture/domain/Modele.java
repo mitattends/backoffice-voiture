@@ -45,8 +45,6 @@ public class Modele {
         for (AxeDetails ad: this.axeDetailsList) {
             for (AxePossibleValues axv: axePossibleValues) {
                 if(ad.getIdAxe().equals(axv.getAxe().getIdAxe())){
-                    System.out.println("anatiny "+axv.getModele().idModele);
-                    System.out.println("code "+this.idModele);
                     axv.idAxe = axv.getAxe().getIdAxe();
                     axv.idModele = axv.getModele().idModele;
                     ad.addData(axv);
@@ -60,7 +58,6 @@ public class Modele {
             List<AxePossibleValues> axePossibleValues = new ArrayList<>();
             for (AxePossibleValues axv: ad.possibleValeur) {
                 if(axv.getModele().getIdModele().equals(this.idModele)){
-                    System.out.println("rectification valeur"+axv.getModele().getIdModele()+" axe"+this.idModele);
                     axePossibleValues.add(axv);
                 }
             }
