@@ -1,5 +1,6 @@
 package com.example.backofficeVoiture.domain;
 
+import com.example.backofficeVoiture.util.Utilities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -100,6 +101,22 @@ public class Utilisateur {
     public void setHistoriqueModificationAnnonceAnnonces(
             final Set<Annonce> historiqueModificationAnnonceAnnonces) {
         this.historiqueModificationAnnonceAnnonces = historiqueModificationAnnonceAnnonces;
+    }
+
+
+    public void setIdUtilisateur(Long value){
+        String sequeceString = Utilities.buildStringSequence("USR", 5, value);
+        this.setIdUtilisateur(sequeceString);
+    }
+    public void setDateNaissance(String dateNaissance) {
+        try{
+            LocalDate localDate = LocalDate.parse(dateNaissance);
+            this.setDateNaissance(localDate);
+        }
+        catch (Exception e){
+            throw e;
+        }
+
     }
 
 }

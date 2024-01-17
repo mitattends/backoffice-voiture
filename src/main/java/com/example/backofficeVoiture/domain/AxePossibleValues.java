@@ -1,5 +1,6 @@
 package com.example.backofficeVoiture.domain;
 
+import com.example.backofficeVoiture.util.Utilities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
@@ -15,15 +16,28 @@ public class AxePossibleValues {
     @Column(length = 200)
     private String value;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_modele")
     @JsonBackReference
     private Modele modele;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "id_axe")
     @JsonBackReference
-    private AxeDetails axe;
+    public AxeDetails axe;
+    @Transient
+    String idAxe;
+
+    @Transient
+    public String idModele;
+
+    public String getIdAxe() {
+        return idAxe;
+    }
+
+    public void setIdAxe(String idAxe) {
+        this.idAxe = idAxe;
+    }
 
     public String getIdAxePossibleValues() {
         return idAxePossibleValues;
@@ -48,7 +62,6 @@ public class AxePossibleValues {
     public void setModele(final Modele modele) {
         this.modele = modele;
     }
-
     public AxeDetails getAxe() {
         return axe;
     }
@@ -57,4 +70,8 @@ public class AxePossibleValues {
         this.axe = axe;
     }
 
+    public void setIdAxePossibleValues(Long value){
+        String sequeceString = Utilities.buildStringSequence("APV", 5, value);
+        this.setIdAxePossibleValues(sequeceString);
+    }
 }

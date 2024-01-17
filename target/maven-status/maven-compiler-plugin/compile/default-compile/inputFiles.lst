@@ -11,13 +11,17 @@
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/util/ApiResponse.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/domain/Modele.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/repos/AnnonceRepository.java
+/home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/response/AnnonceFormData.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/controller/AnnonceController.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/domain/Annonce.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/models/admin/AdminController.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/repos/AxeDetailsRepository.java
+/home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/service/ModelService.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/controller/MarqueController.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/repos/ModeleRepository.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/models/admin/AdminRepository.java
+/home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/service/AnnonceService.java
+/home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/controller/AxeDetailsController.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/repos/UtilisateurRepository.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/domain/DetailsModele.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/models/voiture/VoitureController.java
@@ -25,4 +29,5 @@
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/controller/HomeController.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/models/voiture/VoitureRepository.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/util/JwtUtil.java
+/home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/service/AxePossibleValuesService.java
 /home/fabien/Documents/GitHub/Web-service-voiture/backoffice-voiture/src/main/java/com/example/backofficeVoiture/domain/Utilisateur.java

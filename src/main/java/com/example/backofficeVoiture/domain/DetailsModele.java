@@ -1,7 +1,10 @@
 package com.example.backofficeVoiture.domain;
 
+import com.example.backofficeVoiture.util.Utilities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.util.Optional;
 
 
 @Entity
@@ -9,13 +12,13 @@ import jakarta.persistence.*;
 public class DetailsModele {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_details_modele")
-    private String idAxe;
+    @Column(name = "id_details_model")
+    private String idDetailsModele;
     @Column(nullable = false, updatable = false, length = 200, name = "value")
     private String value;
 
-
+    @Column(name = "id_modele")
+    private String idModel;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_annonce")
     @JsonBackReference
@@ -51,4 +54,24 @@ public class DetailsModele {
         this.axe = axe;
     }
 
+    public void setIdModel(String idModel) {
+        this.idModel = idModel;
+    }
+
+    public String getIdModel() {
+        return idModel;
+    }
+
+    public void setIdDetailsModele(String idAxeDetails) {
+        this.idDetailsModele = idAxeDetails;
+    }
+
+    public String getIdDetailsModele() {
+        return idDetailsModele;
+    }
+
+    public void setIdDetailsModele(Long id){
+        String sequeceString = Utilities.buildStringSequence("D", 5, id);
+        this.setIdDetailsModele(sequeceString);
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.backofficeVoiture.domain;
 
+import com.example.backofficeVoiture.util.Utilities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -19,6 +21,7 @@ public class Marque {
 
     @OneToMany(mappedBy = "marque", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @JsonIgnore
     private Set<Modele> marqueModeles;
 
     public String getIdMarque() {
@@ -45,4 +48,9 @@ public class Marque {
         this.marqueModeles = marqueModeles;
     }
 
+
+    public void setIdMarque(Long value){
+        String sequeceString = Utilities.buildStringSequence("MRQ", 5, value);
+        this.setIdMarque(sequeceString);
+    }
 }

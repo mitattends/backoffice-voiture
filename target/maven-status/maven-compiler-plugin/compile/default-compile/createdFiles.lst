@@ -7,8 +7,11 @@ com/example/backofficeVoiture/domain/AxePossibleValues.class
 com/example/backofficeVoiture/util/ApiResponse.class
 com/example/backofficeVoiture/domain/DetailsModele.class
 com/example/backofficeVoiture/models/voiture/VoitureController.class
+com/example/backofficeVoiture/controller/AxeDetailsController.class
+com/example/backofficeVoiture/response/AnnonceFormData.class
 com/example/backofficeVoiture/models/admin/AdminController.class
 com/example/backofficeVoiture/domain/Utilisateur.class
+com/example/backofficeVoiture/service/AxePossibleValuesService.class
 com/example/backofficeVoiture/models/voiture/VoitureRepository.class
 com/example/backofficeVoiture/models/admin/Admin.class
 com/example/backofficeVoiture/domain/Annonce.class
@@ -16,12 +19,14 @@ com/example/backofficeVoiture/repos/AxePossibleValuesRepository.class
 com/example/backofficeVoiture/models/admin/AdminRepository.class
 com/example/backofficeVoiture/repos/DetailsModeleRepository.class
 com/example/backofficeVoiture/repos/AnnonceRepository.class
+com/example/backofficeVoiture/service/AnnonceService.class
 com/example/backofficeVoiture/repos/MarqueRepository.class
 com/example/backofficeVoiture/controller/HomeController.class
 com/example/backofficeVoiture/BackofficeVoitureApplication.class
 com/example/backofficeVoiture/controller/MarqueController.class
 com/example/backofficeVoiture/repos/ModeleRepository.class
 com/example/backofficeVoiture/repos/AxeDetailsRepository.class
+com/example/backofficeVoiture/service/ModelService.class
 com/example/backofficeVoiture/domain/AxeDetails.class
 com/example/backofficeVoiture/repos/UtilisateurRepository.class
 com/example/backofficeVoiture/controller/AnnonceController.class

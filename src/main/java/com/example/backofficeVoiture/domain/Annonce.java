@@ -1,5 +1,7 @@
 package com.example.backofficeVoiture.domain;
 
+import com.example.backofficeVoiture.service.AnnonceService;
+import com.example.backofficeVoiture.util.Utilities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -134,4 +136,19 @@ public class Annonce {
         this.historiqueModificationAnnonceUtilisateurs = historiqueModificationAnnonceUtilisateurs;
     }
 
+    public Annonce(){}
+    public void setKilometrage(String kilometrage){
+        try{
+            this.setKilometrage(Double.valueOf(kilometrage));
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
+
+    public void setIdAnnonce(Long value){
+        String sequeceString = Utilities.buildStringSequence("AN", 5, value);
+        System.out.println(sequeceString);
+        this.setIdAnnonce(sequeceString);
+    }
 }
