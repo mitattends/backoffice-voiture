@@ -1,8 +1,10 @@
 package com.example.backofficeVoiture.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "photo")
@@ -15,14 +17,16 @@ public class Photo {
     @Basic
     @Column(name = "text")
     private String text;
-    @Basic
-    @Column(name = "id_annonce")
-    private String idAnnonce;
 
-    public Photo(int idPhoto, String text, String idAnnonce) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_annonce")
+    @JsonBackReference
+    private Annonce annonce;
+
+    public Photo(int idPhoto, String text, Annonce annonce) {
         this.setIdPhoto(idPhoto);
         setText(text);
-        setIdAnnonce(idAnnonce);
+        setAnnonce(annonce);
     }
 
     public Photo() {
@@ -45,24 +49,11 @@ public class Photo {
         this.text = text;
     }
 
-    public String getIdAnnonce() {
-        return idAnnonce;
+    public void setAnnonce(Annonce annonce) {
+        this.annonce = annonce;
     }
 
-    public void setIdAnnonce(String idAnnonce) {
-        this.idAnnonce = idAnnonce;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Photo photo = (Photo) o;
-        return idPhoto == photo.idPhoto && Objects.equals(text, photo.text) && Objects.equals(idAnnonce, photo.idAnnonce);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idPhoto, text, idAnnonce);
+    public Annonce getAnnonce() {
+        return annonce;
     }
 }

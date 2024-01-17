@@ -41,7 +41,7 @@ public class AnnonceService {
             annonce.setEtat(10);
             annonce.setUtilisateur(utilisateurService.getUserById(annonceForm.getIdUtilisateur()));
             annonceRepository.save(annonce);
-            photoService.insertMultiplePhoto(annonceForm, annonce.getIdAnnonce());
+            photoService.insertMultiplePhoto(annonceForm, annonce);
             detailsModelService.insert(annonceForm, annonce);
             annonceRepository.flush();
             apiResponse.setMessage("success");

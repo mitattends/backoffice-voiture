@@ -19,10 +19,11 @@ public class UtilisateurService {
     }
 
     public ApiResponse verifyToken(String token){
+        token = token.replace("Bearer ", "");
         ApiResponse apiResponse = new ApiResponse();
         try{
-            Claims claims = new JwtUtil().verify(token);
             Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
+            utilisateur = utilisateurRepository.findUtilisateurByIdUtilisateur(utilisateur.getIdUtilisateur());
             apiResponse.addData("token", token);
             apiResponse.addData("utilisateur", utilisateur);
         }catch (Exception e){

@@ -12,7 +12,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 public class JwtUtil {
-    Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    private static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
     private static long expiryDuration = 60 * 60;
 
     public String userToken(Utilisateur utilisateur){
@@ -79,13 +80,13 @@ public class JwtUtil {
     }
 
     public Utilisateur findUserByToken(String authorization) throws AccessDeniedException {
+        System.out.println("your token "+authorization);
         try {
+
             Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(authorization).getBody();
+            System.out.println("user id "+claims.getIssuer());
             Utilisateur utilisateur = new Utilisateur();
-            utilisateur.setIdUtilisateur(claims.get("idUtilisateur", String.class));
-            utilisateur.setEmail(claims.get("email", String.class));
-            utilisateur.setNom(claims.get("nom", String.class));
-            utilisateur.setPrenom(claims.get("prenom", String.class));
+            utilisateur.setIdUtilisateur(claims.getIssuer());
             return utilisateur;
         } catch (Exception e) {
             throw new AccessDeniedException("Access Denied");

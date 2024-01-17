@@ -55,6 +55,10 @@ public class Annonce {
     )
     private Set<Utilisateur> historiqueModificationAnnonceUtilisateurs;
 
+    @OneToMany(mappedBy = "annonce")
+    @JsonManagedReference
+    private Set<Photo> photoSet;
+
     public String getIdAnnonce() {
         return idAnnonce;
     }
