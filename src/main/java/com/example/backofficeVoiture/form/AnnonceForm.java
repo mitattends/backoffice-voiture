@@ -19,12 +19,15 @@ public class AnnonceForm {
     String description;
     String[] image;
     List<AxeValues> axeValues;
-    public AnnonceForm(){}
-    public AnnonceForm(String selectedModel, String annee, String kilometrage, String prix, String description, List<String> image, List<String> axeValues, String token) {
-        this.selectedModel = selectedModel;
-        this.annee = annee;
-        this.kilometrage = kilometrage;
-        this.prix = prix;
-        this.description = description;   }
+    
+    public void controlData() throws Exception {
+        if(selectedModel == null || selectedModel == "") throw new Exception("Aucun model séléctionné");
+        if(annee == null || annee == "") throw new Exception("Aucune année choisie");
+        if(kilometrage == null || kilometrage == "") throw new Exception("Aucun kilometrage choisie");
+        if(prix == null || prix == "") throw new Exception("Aucun prix choisie");
+        if(description == null || description == "") throw new Exception("Description neglogé");
+        if(image == null || image.length == 0) throw new Exception("Aucune photo envoyé");
+        if(axeValues == null || axeValues.size() == 0) throw new Exception("Aucun parametre choisi");
+    }
 }
 

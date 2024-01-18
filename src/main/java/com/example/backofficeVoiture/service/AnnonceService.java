@@ -14,6 +14,7 @@ import java.util.Set;
 
 @Service
 public class AnnonceService {
+
     @Autowired
     MarqueRepository marqueRepository;
     @Autowired
@@ -30,6 +31,7 @@ public class AnnonceService {
     DetailsModelService detailsModelService;
     @Autowired
     UtilisateurService utilisateurService;
+
     public ApiResponse obetnirAnnonces(String token){
         ApiResponse apiResponse = new ApiResponse();
         try {
@@ -47,6 +49,7 @@ public class AnnonceService {
     public ApiResponse insererAnnonce(AnnonceForm annonceForm, String token){
         ApiResponse apiResponse = new ApiResponse();
         try{
+            annonceForm.controlData();
             Annonce annonce = new Annonce();
             annonce.setIdAnnonce(annonceRepository.getNextSequenceValue());
             annonce.setAnnee(annonceForm.getAnnee());
@@ -63,7 +66,6 @@ public class AnnonceService {
             apiResponse.setMessage("success");
         }
         catch (Exception e){
-            e.printStackTrace();
             apiResponse.addData("error", e.getMessage());
         }
         return apiResponse;
@@ -73,10 +75,25 @@ public class AnnonceService {
         List<Marque> marques = marqueRepository.findAll();
         List<Modele> modeleList = modeleRepository.findAll();
         List<AxeDetails> axeDetailsList = axeDetailsRepository.findAll();
-        List<AxePossibleValues> axePossibleValuesList = axePossibleValuesRepository.findAll();
-        new ModelService(axePossibleValuesRepository).buildModele(modeleList, axeDetailsList, axePossibleValuesList);
+        new ModelService(axePossibleValuesRepository).buildModele(modeleList, axeDetailsList);
         apiResponse.addData("marques", marques);
         apiResponse.addData("models", modeleList);
+        return apiResponse;
+    }
+    public ApiResponse updateAnnonce(String idAnnonce, String etat, String token){
+        ApiResponse apiResponse = new ApiResponse();
+        try{
+            Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
+            utilisateur = utilisateurService.getUserById(utilisateur.getIdUtilisateur());
+            Annonce annonce = annonceRepository.findAnnonceByIdAnnonceAndUtilisateur(idAnnonce, utilisateur);
+            annonce.setEtat(etat);
+            annonceRepository.save(annonce);
+            apiResponse.setMessage("success");
+        }
+        catch (Exception e){
+            apiResponse.setMessage("something went wrong");
+            apiResponse.addData("error", e.getMessage());
+        }
         return apiResponse;
     }
 }

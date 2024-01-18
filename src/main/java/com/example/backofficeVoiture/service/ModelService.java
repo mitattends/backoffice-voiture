@@ -17,7 +17,7 @@ public class ModelService {
     public ModelService(AxePossibleValuesRepository axePossibleValuesRepository){
         this.axePossibleValuesRepository = axePossibleValuesRepository;
     }
-    public void buildModele(List<Modele> modeleList, List<AxeDetails> axeDetailsList, List<AxePossibleValues> axePossibleValues){
+    public void buildModele(List<Modele> modeleList, List<AxeDetails> axeDetailsList){
         for (Modele modele: modeleList) {
             modele.idMarque = modele.getMarque().getIdMarque();
             modele.setAxeDetailsAxeList(axeDetailsList);

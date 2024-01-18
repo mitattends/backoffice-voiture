@@ -155,4 +155,12 @@ public class Annonce {
         System.out.println(sequeceString);
         this.setIdAnnonce(sequeceString);
     }
+    public void setEtat(String etat){
+        try{
+            this.setEtat(Integer.valueOf(etat));
+        }
+        catch (Exception e){
+            throw e;
+        }
+    }
 }
