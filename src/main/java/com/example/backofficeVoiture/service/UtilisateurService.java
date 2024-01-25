@@ -62,7 +62,7 @@ public class UtilisateurService {
             utilisateur.setNom(utilisateurSigninForm.getNom());
             utilisateur.setPrenom(utilisateurSigninForm.getPrenom());
         System.out.println(utilisateurSigninForm.getDateNaissance());
-            utilisateur.setDateNaissance(utilisateurSigninForm.getDateNaissance());
+          //  utilisateur.setDateNaissance(utilisateurSigninForm.getDateNaissance());
             utilisateur.setEmail(utilisateurSigninForm.getEmail());
             utilisateur.setMotDePasse(utilisateurSigninForm.getValidationMotDePasse());
             utilisateur.setIdUtilisateur(utilisateurRepository.getNextSequenceValue());
