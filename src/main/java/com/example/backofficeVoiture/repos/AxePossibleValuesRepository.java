@@ -14,4 +14,6 @@ public interface AxePossibleValuesRepository extends JpaRepository<AxePossibleVa
     @Query(value = "SELECT NEXTVAL('seq_axe_possible_values')", nativeQuery = true)
     Long getNextSequenceValue();
     List<AxePossibleValues> getAxePossibleValuesByModele(Modele modele);
+
+    boolean existsByIdAxePossibleValuesIgnoreCase(String idAxePossibleValues);
 }

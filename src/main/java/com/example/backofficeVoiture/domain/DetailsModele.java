@@ -3,10 +3,13 @@ package com.example.backofficeVoiture.domain;
 import com.example.backofficeVoiture.util.Utilities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Optional;
 
-
+@Getter
+@Setter
 @Entity
 @Table(name = "details_modele")
 public class DetailsModele {

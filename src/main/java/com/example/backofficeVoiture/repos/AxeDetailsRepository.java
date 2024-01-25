@@ -11,4 +11,6 @@ public interface AxeDetailsRepository extends JpaRepository<AxeDetails, String> 
     @Query(value = "SELECT NEXTVAL('seq_axe_details')", nativeQuery = true)
     Long getNextSequenceValue();
     AxeDetails findAxeDetailsByIdAxe(String idAxe);
+    boolean existsByIdAxeIgnoreCase(String idAxe);
+
 }

@@ -12,9 +12,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 public class JwtUtil {
-    private static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    private static long expiryDuration = 60 * 60;
+    private static final long expiryDuration = 60 * 60;
 
     public String userToken(Utilisateur utilisateur){
         long milliTime = System.currentTimeMillis();
@@ -33,15 +33,9 @@ public class JwtUtil {
         claims.put("nom", utilisateur.getNom());
         claims.put("prenom", utilisateur.getPrenom());
         claims.put("email",utilisateur.getEmail());
-        claims.put("idUtilisateur", utilisateur.getIdUtilisateur());
 
-        // generate jwt using claims
-        String token = Jwts.builder()
-                .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS256, key)
-                .compact();
-
-        return token;
+        return Jwts.builder()
+                .setClaims(claims).signWith(key).compact();
     }
     public String generate(Admin admin) {
         long milliTime = System.currentTimeMillis();
@@ -63,7 +57,7 @@ public class JwtUtil {
         // generate jwt using claims
         String token = Jwts.builder()
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, key)
+                .signWith(key)
                 .compact();
 
         return token;
@@ -72,8 +66,7 @@ public class JwtUtil {
 
     public Claims verify(String authorization) throws Exception {
         try {
-            Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(authorization).getBody();
-            return claims;
+            return Jwts.parser().setSigningKey(key).parseClaimsJws(authorization).getBody();
         } catch (Exception e) {
             throw new AccessDeniedException("Access Denied");
         }
@@ -81,15 +74,13 @@ public class JwtUtil {
 
     public Utilisateur findUserByToken(String authorization) throws AccessDeniedException {
         authorization = authorization.replace("Bearer ", "");
-        System.out.println("your token "+authorization);
         try {
             Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(authorization).getBody();
-            System.out.println("user id "+claims.getIssuer());
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setIdUtilisateur(claims.getIssuer());
             return utilisateur;
         } catch (Exception e) {
-            throw new AccessDeniedException("Access Denied");
+            throw new AccessDeniedException("Access Denied "+e.getMessage());
         }
     }
 

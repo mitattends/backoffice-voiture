@@ -6,7 +6,6 @@ insert into modele values
 ('MD0002', 'Hilux', 'MQ001'),
 ('MD0003', 'Sprinter','MQ002');
 
-
 insert into axe_details values
 ('AX0001', 'Puissance moteur'),
 ('AX0002', 'Carrosserie'),
@@ -17,8 +16,6 @@ insert into axe_details values
 ('AX0007', 'Type de motorisation');
 
 -- Yaris
-
-
 insert into axe_possible_values values
 ('AXV006','MD0001', 'AX0001', '150'),
 ('AXV007','MD0001', 'AX0001', '200'),

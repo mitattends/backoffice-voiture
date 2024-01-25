@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ModeleRepository extends JpaRepository<Modele, String> {
     @Query(value = "SELECT NEXTVAL('seq_modele')", nativeQuery = true)
     Long getNextSequenceValue();
+
+    boolean existsByIdModeleIgnoreCase(String idModele);
 }

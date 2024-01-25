@@ -14,4 +14,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     Long getNextSequenceValue();
     List<Annonce> findAnnonceByUtilisateur(Utilisateur utilisateur);
     Annonce findAnnonceByIdAnnonceAndUtilisateur(String idAnnonce, Utilisateur utilisateur);
+    List<Annonce> findAllByHistoriqueModificationAnnonceUtilisateurs(Utilisateur utilisateur);
+
+    boolean existsByIdAnnonceIgnoreCase(String idAnnonce);
 }

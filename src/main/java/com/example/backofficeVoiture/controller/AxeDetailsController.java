@@ -1,9 +1,70 @@
 package com.example.backofficeVoiture.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.backofficeVoiture.model.AxeDetailsDTO;
+import com.example.backofficeVoiture.service.AxeDetailsService;
+import com.example.backofficeVoiture.util.ApiResponse;
+import jakarta.validation.Valid;
+import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/axe")
 public class AxeDetailsController {
+    private final AxeDetailsService axeDetailsService;
+
+    public AxeDetailsController(AxeDetailsService axeDetailsService) {
+        this.axeDetailsService = axeDetailsService;
+    }
+
+    @GetMapping
+    public ApiResponse getAllAxeDetailss() {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.addData("axes", axeDetailsService.findAll());
+        return apiResponse;
+    }
+
+    @GetMapping("/{idAxe}")
+    public ApiResponse getAxeDetails(
+            @PathVariable(name = "idAxe") final String idAxe) throws Exception {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.addData("axe", axeDetailsService.get(idAxe));
+        return apiResponse;
+    }
+
+    @PostMapping
+    public ResponseEntity<String> createAxeDetails(
+            @RequestBody @Valid final AxeDetailsDTO axeDetailsDTO,
+            final BindingResult bindingResult) throws MethodArgumentNotValidException {
+        if (!bindingResult.hasFieldErrors("idAxe") && axeDetailsDTO.getIdAxe() == null) {
+            bindingResult.rejectValue("idAxe", "NotNull");
+        }
+        if (!bindingResult.hasFieldErrors("idAxe") && axeDetailsService.idAxeExists(axeDetailsDTO.getIdAxe())) {
+            bindingResult.rejectValue("idAxe", "Exists.axeDetails.idAxe");
+        }
+        if (bindingResult.hasErrors()) {
+            throw new MethodArgumentNotValidException(new MethodParameter(
+                    this.getClass().getDeclaredMethods()[0], -1), bindingResult);
+        }
+        final String createdIdAxe = axeDetailsService.create(axeDetailsDTO);
+        return new ResponseEntity<>(createdIdAxe, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{idAxe}")
+    public ResponseEntity<String> updateAxeDetails(@PathVariable(name = "idAxe") final String idAxe,
+                                                   @RequestBody @Valid final AxeDetailsDTO axeDetailsDTO) throws Exception {
+        axeDetailsService.update(idAxe, axeDetailsDTO);
+        return ResponseEntity.ok(idAxe);
+    }
+
+    @DeleteMapping("/{idAxe}")
+    public ResponseEntity<Void> deleteAxeDetails(@PathVariable(name = "idAxe") final String idAxe) {
+        axeDetailsService.delete(idAxe);
+        return ResponseEntity.noContent().build();
+    }
 }

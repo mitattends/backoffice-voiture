@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface MarqueRepository extends JpaRepository<Marque, String> {
     @Query(value = "SELECT NEXTVAL('seq_marque')", nativeQuery = true)
     Long getNextSequenceValue();
+    boolean existsByIdMarqueIgnoreCase(String idMarque);
+    Marque findMarqueByIdMarque(String idMarque);
 }
