@@ -54,13 +54,14 @@ public class UtilisateurService {
         return apiResponse;
     }
 
-    public ApiResponse signin(UtilisateurSigninForm utilisateurSigninForm){
+    public ApiResponse signin(UtilisateurSigninForm utilisateurSigninForm) {
         ApiResponse apiResponse = new ApiResponse();
         try{
             utilisateurSigninForm.checkPassword();
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setNom(utilisateurSigninForm.getNom());
             utilisateur.setPrenom(utilisateurSigninForm.getPrenom());
+        System.out.println(utilisateurSigninForm.getDateNaissance());
             utilisateur.setDateNaissance(utilisateurSigninForm.getDateNaissance());
             utilisateur.setEmail(utilisateurSigninForm.getEmail());
             utilisateur.setMotDePasse(utilisateurSigninForm.getValidationMotDePasse());
@@ -71,7 +72,8 @@ public class UtilisateurService {
             apiResponse.addData("token", token);
             apiResponse.addData("utilisateur", utilisateur);
         } catch (Exception e){
-          apiResponse.addData("error", e.getMessage());
+            System.out.println(e);
+             apiResponse.addData("error", e.getMessage());
         }
         return apiResponse;
     }

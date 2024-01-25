@@ -19,7 +19,7 @@ public class AuthentificationController {
         return utilisateurService.login(utilisateurLoginForm);
     }
     @PostMapping("/signin")
-    public ApiResponse signin(@RequestBody UtilisateurSigninForm utilisateurSigninForm){
+    public ApiResponse signin(@RequestBody UtilisateurSigninForm utilisateurSigninForm) {
         return utilisateurService.signin(utilisateurSigninForm);
     }
     @PostMapping("/token")

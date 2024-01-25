@@ -84,7 +84,7 @@ public class AnnonceService {
         ApiResponse apiResponse = new ApiResponse();
         try{
             Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
-            utilisateur = utilisateurService.getUserById(utilisateur.getIdUtilisateur());
+            utilisateurService.getUserById(utilisateur.getIdUtilisateur());
             List<Marque> marques = marqueRepository.findAll();
             List<Modele> modeleList = modeleRepository.findAll();
             List<AxeDetails> axeDetailsList = axeDetailsRepository.findAll();
