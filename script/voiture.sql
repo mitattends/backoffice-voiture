@@ -65,7 +65,6 @@ create table details_modele(
 );
 alter table details_modele add column id_details_model varchar(20) primary key
 
-
 create table historique_modification_annonce(
     id_annonce varchar(20) references annonce(id_annonce),
     id_utilisateur varchar(20) references utilisateur(id_utilisateur)

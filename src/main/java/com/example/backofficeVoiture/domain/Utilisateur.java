@@ -109,7 +109,11 @@ public class Utilisateur {
         this.setIdUtilisateur(sequeceString);
     }
     public void setDateNaissance(String dateNaissance) {
+        System.out.println("date "+ dateNaissance);
+        // Text '2024-01-17T21:00:00.000Z
         try{
+            dateNaissance = dateNaissance.split("T")[0];
+            System.out.println("date naissance "+dateNaissance);
             LocalDate localDate = LocalDate.parse(dateNaissance);
             this.setDateNaissance(localDate);
         }
