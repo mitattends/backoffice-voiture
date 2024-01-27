@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/axe")
+@CrossOrigin("*")
 public class AxeDetailsController {
     private final AxeDetailsService axeDetailsService;
 

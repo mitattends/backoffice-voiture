@@ -13,6 +13,7 @@ import com.example.backofficeVoiture.util.JwtUtil;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin("*")
 public class AdministrateurController {
     @Autowired
     AdministrateurService administrateurService;

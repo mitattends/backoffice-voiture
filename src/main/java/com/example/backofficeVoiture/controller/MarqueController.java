@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/marque")
-
+@CrossOrigin("*")
 public class MarqueController {
 
     private final MarqueService marqueService;
