@@ -16,14 +16,17 @@ public class AuthentificationController {
     @Autowired
     UtilisateurService utilisateurService;
     @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public ApiResponse login(@RequestBody UtilisateurLoginForm utilisateurLoginForm){
         return utilisateurService.login(utilisateurLoginForm);
     }
     @PostMapping("/signin")
+    @CrossOrigin(origins = "*")
     public ApiResponse signin(@RequestBody UtilisateurSigninForm utilisateurSigninForm) {
         return utilisateurService.signin(utilisateurSigninForm);
     }
     @PostMapping("/token")
+    @CrossOrigin(origins = "*")
     public ApiResponse validateToken(@RequestHeader("Authorization") String token){
         return utilisateurService.verifyToken(token);
     }

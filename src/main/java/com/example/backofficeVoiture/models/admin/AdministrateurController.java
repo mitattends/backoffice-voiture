@@ -19,12 +19,14 @@ public class AdministrateurController {
     AdministrateurService administrateurService;
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public ApiResponse login(@RequestBody AdministrateurDTO administrateurDTO){
         return administrateurService.verify(administrateurDTO);
     }
     @PostMapping("/signin")
-    public ApiResponse signin(@RequestBody AdministrateurDTO administrateurDTO){
-        return administrateurService.insert(administrateurDTO);
+    @CrossOrigin(origins = "*")
+    public ApiResponse signin(@RequestBody AdministrateurDTO administrateurDTO, @RequestHeader("Authorization") String token){
+        return administrateurService.insert(administrateurDTO, token);
     }
 
 }

@@ -11,9 +11,10 @@ import org.springframework.stereotype.Service;
 public class AdministrateurService {
     @Autowired
     AdministrateurRepository administrateurRepository;
-    public ApiResponse insert(AdministrateurDTO administrateurDTO){
+    public ApiResponse insert(AdministrateurDTO administrateurDTO, String tokenS){
         ApiResponse apiResponse = new ApiResponse();
         try{
+            new JwtUtil().verify(tokenS);
             Administrateur administrateur = administrateurDTO.getAdministrateur();
             administrateur.setIdAdministrateur(administrateurRepository.getNextSequenceValue());
             String token = new JwtUtil().generate(administrateur);
@@ -35,12 +36,14 @@ public class AdministrateurService {
             System.out.println(administrateurDTO.getEmail());
             System.out.println(administrateurDTO.getMotDePasse());
             administrateur = administrateurRepository.findAdministrateurByEmailAndMotDePasse(administrateurDTO.getEmail(), administrateurDTO.getMotDePasse());
+            if(administrateur == null) throw new Exception("Login invalide");
             administrateur.setIdAdministrateur(administrateurRepository.getNextSequenceValue());
             String token = new JwtUtil().generate(administrateur);
             apiResponse.setMessage("success");
             apiResponse.addData("token", token);
             apiResponse.addData("user", administrateur);
         }catch (Exception e){
+            apiResponse.setMessage("error");
             apiResponse.addData("error", e.getMessage());
         }
         return apiResponse;

@@ -65,6 +65,7 @@ public class JwtUtil {
     }
 
     public Claims verify(String authorization) throws Exception {
+        authorization = authorization.replace("Bearer ", "");
         try {
             return Jwts.parser().setSigningKey(key).parseClaimsJws(authorization).getBody();
         } catch (Exception e) {

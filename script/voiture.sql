@@ -77,3 +77,4 @@ create table axe_values(
     label varchar(20),
     id_axe varchar(20) references axe_details(id_axe)
 );
+

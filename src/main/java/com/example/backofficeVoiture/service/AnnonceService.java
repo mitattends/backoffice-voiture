@@ -41,21 +41,27 @@ public class AnnonceService {
     @Autowired
     UtilisateurRepository utilisateurRepository;
 
-    public ApiResponse getPendingAnnonce(String etat){
+    public ApiResponse getPendingAnnonce(String etat, String token){
         ApiResponse apiResponse = new ApiResponse();
-        List<Annonce> annonces =  annonceRepository.findAnnonceByEtat(Integer.valueOf(etat));
-        for (Annonce annonce: annonces){
-            for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
-                //System.out.println(detailsModele.getValue());
-                AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
-                try{
-                    detailsModele.setAxePossibleValues(axePossibleValues);
-                }catch (Exception e){
-                    detailsModele.setAxePossibleValues(new AxePossibleValues());
+        try{
+            new JwtUtil().verify(token);
+            List<Annonce> annonces =  annonceRepository.findAnnonceByEtat(Integer.valueOf(etat));
+            for (Annonce annonce: annonces){
+                for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
+                    //System.out.println(detailsModele.getValue());
+                    AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
+                    try{
+                        detailsModele.setAxePossibleValues(axePossibleValues);
+                    }catch (Exception e){
+                        detailsModele.setAxePossibleValues(new AxePossibleValues());
+                    }
                 }
             }
+            apiResponse.addData("pending",annonces);
+        }catch (Exception e){
+            apiResponse.addData("error", e.getMessage());
         }
-        apiResponse.addData("pending",annonces);
+
         return apiResponse;
     }
 
@@ -225,4 +231,21 @@ public class AnnonceService {
         return annonceRepository.existsByIdAnnonceIgnoreCase(idAnnonce);
     }
 
+    public ApiResponse validerAnnonce(AnnonceUpdateDTO annonceUpdateDTO, String token){
+        ApiResponse apiResponse = new ApiResponse();
+        System.out.println(annonceUpdateDTO.getIdAnnonce());
+        System.out.println(annonceUpdateDTO.getEtat());
+        try{
+            new JwtUtil().verify(token);
+            Annonce annonce = annonceRepository.findAnnonceByIdAnnonce(annonceUpdateDTO.getIdAnnonce());
+            annonce.setEtat(annonceUpdateDTO.getEtat());
+            annonceRepository.save(annonce);
+            apiResponse.setMessage("success");
+        }
+        catch (Exception e){
+            apiResponse.setMessage("something went wrong");
+            apiResponse.addData("error", e.getMessage());
+        }
+        return apiResponse;
+    }
 }

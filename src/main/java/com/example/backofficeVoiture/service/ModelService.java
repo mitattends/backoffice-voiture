@@ -8,6 +8,7 @@ import com.example.backofficeVoiture.model.ModeleDTO;
 import com.example.backofficeVoiture.repos.AxePossibleValuesRepository;
 import com.example.backofficeVoiture.repos.MarqueRepository;
 import com.example.backofficeVoiture.repos.ModeleRepository;
+import com.example.backofficeVoiture.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,8 @@ public class ModelService {
                 .orElseThrow(Exception::new);
     }
 
-    public String create(final ModeleDTO modeleDTO) throws Exception {
+    public String create(final ModeleDTO modeleDTO, String token) throws Exception {
+        new JwtUtil().verify(token);
         final Modele modele = new Modele();
         modele.setNom(modeleDTO.getNom());
         modele.setMarque(marqueRepository.findMarqueByIdMarque(modeleDTO.getMarque()));

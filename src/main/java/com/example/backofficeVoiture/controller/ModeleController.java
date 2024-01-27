@@ -24,23 +24,27 @@ public class ModeleController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*")
     public ResponseEntity<List<ModeleDTO>> getAllModeles() {
         return ResponseEntity.ok(modeleService.findAll());
     }
 
     @GetMapping("/{idModele}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<ModeleDTO> getModele(
             @PathVariable(name = "idModele") final String idModele) throws Exception {
         return ResponseEntity.ok(modeleService.get(idModele));
     }
 
     @PostMapping
-    public ResponseEntity<String> createModele(@RequestBody @Valid final ModeleDTO modeleDTO) throws Exception {
-        final String createdIdModele = modeleService.create(modeleDTO);
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> createModele(@RequestBody @Valid final ModeleDTO modeleDTO, @RequestHeader("Authorization") String token) throws Exception {
+        final String createdIdModele = modeleService.create(modeleDTO, token);
         return new ResponseEntity<>(createdIdModele, HttpStatus.CREATED);
     }
 
     @PutMapping("/{idModele}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> updateModele(
             @PathVariable(name = "idModele") final String idModele,
             @RequestBody @Valid final ModeleDTO modeleDTO) throws Exception {
@@ -49,6 +53,7 @@ public class ModeleController {
     }
 
     @DeleteMapping("/{idModele}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Void> deleteModele(
             @PathVariable(name = "idModele") final String idModele) {
         modeleService.delete(idModele);

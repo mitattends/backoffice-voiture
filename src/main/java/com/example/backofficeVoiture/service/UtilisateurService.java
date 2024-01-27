@@ -44,9 +44,10 @@ public class UtilisateurService {
             Utilisateur utilisateur = utilisateurRepository.findUtilisateurByMotDePasseAndEmail(utilisateurLoginForm.getPassword(), utilisateurLoginForm.getEmail());
             if(utilisateur == null) throw new Exception("Authentification failed.");
             String token = new JwtUtil().userToken(utilisateur);
-            apiResponse.addData("token", token);
+
             System.out.println("token provide "+token);
             apiResponse.addData("utilisateur", utilisateur);
+            apiResponse.addData("token", token);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
             apiResponse.setMessage("Wrong password or email");

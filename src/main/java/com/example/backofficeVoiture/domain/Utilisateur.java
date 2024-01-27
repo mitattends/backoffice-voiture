@@ -1,6 +1,7 @@
 package com.example.backofficeVoiture.domain;
 
 import com.example.backofficeVoiture.util.Utilities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -28,14 +29,17 @@ public class Utilisateur {
     @Column(length = 200)
     private String email;
 
+    @JsonIgnore
     @Column(length = 200)
     private String motDePasse;
 
     @OneToMany(mappedBy = "utilisateur")
     @JsonManagedReference
+    @JsonIgnore
     private Set<Annonce> utilisateurAnnonces;
 
     @ManyToMany(mappedBy = "historiqueModificationAnnonceUtilisateurs")
+    @JsonIgnore
     private Set<Annonce> historiqueModificationAnnonceAnnonces;
 
     public String getIdUtilisateur() {

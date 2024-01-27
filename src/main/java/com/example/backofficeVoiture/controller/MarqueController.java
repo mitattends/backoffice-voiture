@@ -29,18 +29,21 @@ public class MarqueController {
     }
 
     @GetMapping("/{idMarque}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<MarqueDTO> getMarque(
             @PathVariable(name = "idMarque") final String idMarque) throws Exception {
         return ResponseEntity.ok(marqueService.get(idMarque));
     }
 
     @PostMapping
-    public ResponseEntity<String> createMarque(@RequestBody @Valid final MarqueDTO marqueDTO) throws MethodArgumentNotValidException {
-        final String createdIdMarque = marqueService.create(marqueDTO);
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<String> createMarque(@RequestBody @Valid final MarqueDTO marqueDTO, @RequestHeader("Authorization") String token) throws Exception {
+        final String createdIdMarque = marqueService.create(marqueDTO, token);
         return new ResponseEntity<>(createdIdMarque, HttpStatus.CREATED);
     }
 
     @PutMapping("/{idMarque}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> updateMarque(
             @PathVariable(name = "idMarque") final String idMarque,
             @RequestBody @Valid final MarqueDTO marqueDTO) throws Exception {
@@ -49,6 +52,7 @@ public class MarqueController {
     }
 
     @DeleteMapping("/{idMarque}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Void> deleteMarque(
             @PathVariable(name = "idMarque") final String idMarque) {
         marqueService.delete(idMarque);

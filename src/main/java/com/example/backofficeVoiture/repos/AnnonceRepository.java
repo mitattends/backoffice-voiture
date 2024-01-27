@@ -19,4 +19,5 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     boolean existsByIdAnnonceIgnoreCase(String idAnnonce);
 
     List<Annonce> findAnnonceByEtat(Integer etat);
+    Annonce findAnnonceByIdAnnonce(String idAnnonce);
 }

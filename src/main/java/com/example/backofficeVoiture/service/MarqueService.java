@@ -3,6 +3,7 @@ package com.example.backofficeVoiture.service;
 import com.example.backofficeVoiture.domain.Marque;
 import com.example.backofficeVoiture.model.MarqueDTO;
 import com.example.backofficeVoiture.repos.MarqueRepository;
+import com.example.backofficeVoiture.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,8 @@ public class MarqueService {
                 .orElseThrow(Exception::new);
     }
 
-    public String create(final MarqueDTO marqueDTO) {
+    public String create(final MarqueDTO marqueDTO, String token) throws Exception {
+        new JwtUtil().verify(token);
         final Marque marque = new Marque();
         mapToEntity(marqueDTO, marque);
         marque.setIdMarque(marqueRepository.getNextSequenceValue());
