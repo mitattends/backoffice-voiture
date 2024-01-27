@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
 
-@CrossOrigin(origins = "localhost:8100")
 @RestController
 @RequestMapping("/annonce")
+@CrossOrigin(origins = "*")
 public class AnnonceController {
 
     @Autowired
