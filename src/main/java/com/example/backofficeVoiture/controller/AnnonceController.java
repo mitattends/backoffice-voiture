@@ -11,7 +11,6 @@ import java.nio.file.AccessDeniedException;
 
 @RestController
 @RequestMapping("/annonce")
-@CrossOrigin(origins = "*")
 public class AnnonceController {
 
     @Autowired
