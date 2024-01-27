@@ -41,12 +41,41 @@ public class AnnonceService {
     @Autowired
     UtilisateurRepository utilisateurRepository;
 
+    public ApiResponse getPendingAnnonce(String etat){
+        ApiResponse apiResponse = new ApiResponse();
+        List<Annonce> annonces =  annonceRepository.findAnnonceByEtat(Integer.valueOf(etat));
+        for (Annonce annonce: annonces){
+            for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
+                //System.out.println(detailsModele.getValue());
+                AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
+                try{
+                    detailsModele.setAxePossibleValues(axePossibleValues);
+                }catch (Exception e){
+                    detailsModele.setAxePossibleValues(new AxePossibleValues());
+                }
+            }
+        }
+        apiResponse.addData("pending",annonces);
+        return apiResponse;
+    }
+
     public ApiResponse obetnirAnnonces(String token){
         ApiResponse apiResponse = new ApiResponse();
         try {
             Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
             utilisateur = utilisateurService.getUserById(utilisateur.getIdUtilisateur());
             List<Annonce> annonces = annonceRepository.findAnnonceByUtilisateur(utilisateur);
+            for (Annonce annonce: annonces){
+                for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
+                  //  System.out.println(detailsModele.getValue());
+                    AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
+                    try{
+                        detailsModele.setAxePossibleValues(axePossibleValues);
+                    }catch (Exception e){
+                        detailsModele.setAxePossibleValues(new AxePossibleValues());
+                    }
+                }
+            }
             apiResponse.addData("annonces", annonces);
             apiResponse.setMessage("success");
         } catch (Exception e){

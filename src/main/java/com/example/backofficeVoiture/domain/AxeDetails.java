@@ -35,6 +35,11 @@ public class AxeDetails {
     @JsonFormat
     @Transient
     List<AxePossibleValues> possibleValeur = new ArrayList<>(); // possible valeur
+
+    @JsonFormat
+    @Transient
+    public List<AxeValues> axeValues = new ArrayList<>();
+
     public void addData(AxePossibleValues axePossibleValues){
         this.possibleValeur.add(axePossibleValues);
     }
@@ -46,10 +51,18 @@ public class AxeDetails {
         return axeAxePossibleValueses;
     }
 
-    public void setAxePossibleValuesList(List<AxePossibleValues> axePossibleValuesList){
-
+    public void setAxePossibleValuesList(List<AxeValues> axePossibleValuesList){
+        System.out.println(axePossibleValuesList.size());
+        this.axeValues = axePossibleValuesList;
     }
 
+    public void setAxeAxePossibleValueses(Set<AxePossibleValues> axeAxePossibleValueses) {
+        this.axeAxePossibleValueses = axeAxePossibleValueses;
+    }
+
+    public List<AxePossibleValues> getPossibleValeur() {
+        return possibleValeur;
+    }
     // set the value of axe details for an object
     /*public void setAxePossibleValuesDetails(Set<AxePossibleValues> axeAxePossibleValueses){
         this.axeAxePossibleValueses = axeAxePossibleValueses;

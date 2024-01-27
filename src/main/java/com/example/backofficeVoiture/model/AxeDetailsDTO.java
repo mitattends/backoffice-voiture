@@ -15,4 +15,5 @@ public class AxeDetailsDTO {
     @Size(max = 200)
     private String nom;
 
+    String[] details;
 }

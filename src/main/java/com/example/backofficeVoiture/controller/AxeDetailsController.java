@@ -39,19 +39,8 @@ public class AxeDetailsController {
 
     @PostMapping
     public ResponseEntity<String> createAxeDetails(
-            @RequestBody @Valid final AxeDetailsDTO axeDetailsDTO,
-            final BindingResult bindingResult) throws MethodArgumentNotValidException {
-        if (!bindingResult.hasFieldErrors("idAxe") && axeDetailsDTO.getIdAxe() == null) {
-            bindingResult.rejectValue("idAxe", "NotNull");
-        }
-        if (!bindingResult.hasFieldErrors("idAxe") && axeDetailsService.idAxeExists(axeDetailsDTO.getIdAxe())) {
-            bindingResult.rejectValue("idAxe", "Exists.axeDetails.idAxe");
-        }
-        if (bindingResult.hasErrors()) {
-            throw new MethodArgumentNotValidException(new MethodParameter(
-                    this.getClass().getDeclaredMethods()[0], -1), bindingResult);
-        }
-        final String createdIdAxe = axeDetailsService.create(axeDetailsDTO);
+            @RequestBody AxeDetailsDTO axeDetailsDTO) {
+        String createdIdAxe = axeDetailsService.create(axeDetailsDTO);
         return new ResponseEntity<>(createdIdAxe, HttpStatus.CREATED);
     }
 

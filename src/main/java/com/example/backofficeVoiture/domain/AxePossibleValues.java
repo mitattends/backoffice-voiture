@@ -16,6 +16,9 @@ public class AxePossibleValues {
     @Column(length = 200)
     private String value;
 
+    @Column(name = "valeur_numerique")
+    private Integer valeurNumerique;
+
     @ManyToOne()
     @JoinColumn(name = "id_modele")
     @JsonBackReference
@@ -25,6 +28,11 @@ public class AxePossibleValues {
     @JoinColumn(name = "id_axe")
     @JsonBackReference
     public AxeDetails axe;
+
+    @Column(name = "id_value")
+    public Integer idValue;
+
+
     @Transient
     String idAxe;
 
@@ -73,5 +81,29 @@ public class AxePossibleValues {
     public void setIdAxePossibleValues(Long value){
         String sequeceString = Utilities.buildStringSequence("APV", 5, value);
         this.setIdAxePossibleValues(sequeceString);
+    }
+
+    public Integer getValeurNumerique() {
+        return valeurNumerique;
+    }
+
+    public void setValeurNumerique(Integer valeurNumerique) {
+        this.valeurNumerique = valeurNumerique;
+    }
+
+    public Integer getIdValue() {
+        return idValue;
+    }
+
+    public void setIdValue(Integer idValue) {
+        this.idValue = idValue;
+    }
+
+    public String getIdModele() {
+        return idModele;
+    }
+
+    public void setIdModele(String idModele) {
+        this.idModele = idModele;
     }
 }

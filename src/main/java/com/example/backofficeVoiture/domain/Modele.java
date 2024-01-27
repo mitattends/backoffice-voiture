@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -118,4 +117,5 @@ public class Modele {
         String sequeceString = Utilities.buildStringSequence("MD", 5, value);
         this.setIdModele(sequeceString);
     }
+
 }

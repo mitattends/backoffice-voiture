@@ -69,3 +69,11 @@ create table historique_modification_annonce(
     id_annonce varchar(20) references annonce(id_annonce),
     id_utilisateur varchar(20) references utilisateur(id_utilisateur)
 );
+
+
+drop table axe_values;
+create table axe_values(
+    id_value serial primary key ,
+    label varchar(20),
+    id_axe varchar(20) references axe_details(id_axe)
+);

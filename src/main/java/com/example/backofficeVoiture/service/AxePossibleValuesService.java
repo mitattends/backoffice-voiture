@@ -4,10 +4,14 @@ import java.util.List;
 
 import com.example.backofficeVoiture.domain.AxeDetails;
 import com.example.backofficeVoiture.domain.AxePossibleValues;
+import com.example.backofficeVoiture.domain.AxeValues;
 import com.example.backofficeVoiture.domain.Modele;
 import com.example.backofficeVoiture.model.AxePossibleValuesDTO;
+import com.example.backofficeVoiture.model.AxeValuesDTO;
+import com.example.backofficeVoiture.model.ModeleDTO;
 import com.example.backofficeVoiture.repos.AxeDetailsRepository;
 import com.example.backofficeVoiture.repos.AxePossibleValuesRepository;
+import com.example.backofficeVoiture.repos.AxeValuesRepository;
 import com.example.backofficeVoiture.repos.ModeleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,9 +20,32 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AxePossibleValuesService {
+    @Autowired
     private final AxePossibleValuesRepository axePossibleValuesRepository;
+    @Autowired
     private final ModeleRepository modeleRepository;
+    @Autowired
     private final AxeDetailsRepository axeDetailsRepository;
+
+    @Autowired
+    AxeValuesRepository axeValuesRepository;
+
+    public void insertAxePossibleValue(ModeleDTO modeleDTO){
+        List<AxeValuesDTO> axes = modeleDTO.getAxes();
+        for (AxeValuesDTO axe: axes){
+            for(String possibleValue: axe.getAxeValue()){
+                AxeValues valeur = axeValuesRepository.findAxeValuesByIdValue(Integer.valueOf(possibleValue));
+                AxePossibleValues axePossibleValues = new AxePossibleValues();
+                axePossibleValues.setIdAxePossibleValues(axePossibleValuesRepository.getNextSequenceValue());
+                axePossibleValues.setModele(modeleRepository.getReferenceById(modeleDTO.getIdModele()));
+                axePossibleValues.setAxe(axeDetailsRepository.getReferenceById(axe.getIdAxe()));
+                axePossibleValues.setValue(valeur.getLabel());
+                axePossibleValues.setValeurNumerique(1);
+                axePossibleValues.setIdValue(valeur.getIdValue());
+                axePossibleValuesRepository.save(axePossibleValues);
+            }
+        }
+    }
 
     public AxePossibleValuesService(AxePossibleValuesRepository axePossibleValuesRepository, ModeleRepository modeleRepository, AxeDetailsRepository axeDetailsRepository) {
         this.axePossibleValuesRepository = axePossibleValuesRepository;

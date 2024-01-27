@@ -2,9 +2,12 @@ package com.example.backofficeVoiture.domain;
 
 import com.example.backofficeVoiture.util.Utilities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import java.util.Optional;
 
@@ -31,6 +34,19 @@ public class DetailsModele {
     @JoinColumn(name = "id_axe")
     @JsonBackReference
     private AxeDetails axe;
+
+
+    @Transient
+    @NotFound(action = NotFoundAction.IGNORE)
+    public AxePossibleValues axePossibleValues = new AxePossibleValues();
+
+    public void setAxePossibleValues(AxePossibleValues axePossibleValues) {
+        this.axePossibleValues = axePossibleValues;
+    }
+
+    public AxePossibleValues getAxePossibleValues() {
+        return axePossibleValues;
+    }
 
     public String getValue() {
         return value;

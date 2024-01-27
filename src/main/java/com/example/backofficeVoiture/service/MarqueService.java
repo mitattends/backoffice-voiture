@@ -25,7 +25,7 @@ public class MarqueService {
     public String create(final MarqueDTO marqueDTO) {
         final Marque marque = new Marque();
         mapToEntity(marqueDTO, marque);
-        marque.setIdMarque(marqueDTO.getIdMarque());
+        marque.setIdMarque(marqueRepository.getNextSequenceValue());
         return marqueRepository.save(marque).getIdMarque();
     }
 

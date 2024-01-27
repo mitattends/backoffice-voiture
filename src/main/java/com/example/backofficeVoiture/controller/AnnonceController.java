@@ -40,4 +40,8 @@ public class AnnonceController {
             @PathVariable(name = "idAnnonce") final String idAnnonce, @RequestHeader("Authorization") String token) throws AccessDeniedException {
         annonceService.delete(idAnnonce, token);
     }
+    @GetMapping("/admin/{etat}")
+    public ApiResponse getPendingAnnonce(@PathVariable String etat){
+        return annonceService.getPendingAnnonce(etat);
+    }
 }

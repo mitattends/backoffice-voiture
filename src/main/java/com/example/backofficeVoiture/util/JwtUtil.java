@@ -5,7 +5,7 @@ import java.security.Key;
 import java.util.Date;
 
 import com.example.backofficeVoiture.domain.Utilisateur;
-import com.example.backofficeVoiture.models.admin.Admin;
+import com.example.backofficeVoiture.models.admin.Administrateur;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -37,7 +37,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setClaims(claims).signWith(key).compact();
     }
-    public String generate(Admin admin) {
+    public String generate(Administrateur admin) {
         long milliTime = System.currentTimeMillis();
         long expiryTime = milliTime + expiryDuration * 1000;
 
@@ -46,13 +46,13 @@ public class JwtUtil {
 
         // claims
         Claims claims = Jwts.claims()
-                .setIssuer(admin.getId().toString())
+                .setIssuer(admin.getIdAdministrateur().toString())
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiryAt);
 
         // optional claims
-        claims.put("userName", admin.getUserName());
-        claims.put("password", admin.getPassword());
+        claims.put("userName", admin.getEmail());
+        claims.put("password", admin.getMotDePasse());
 
         // generate jwt using claims
         String token = Jwts.builder()

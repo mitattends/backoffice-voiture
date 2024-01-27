@@ -13,7 +13,35 @@ insert into axe_details values
 ('AX0004', 'Vitesse'),
 ('AX0005', 'Portière'),
 ('AX0006', 'Version'),
-('AX0007', 'Type de motorisation');
+('AX0007', 'Type de motorisation'),
+('AX0008', 'Couleur');
+
+insert into axe_values(label, id_axe) values
+    ('10-20', 'AX0001'),
+    ('20-30', 'AX0001'),
+    ('30-40', 'AX0001'),
+    ('50-60', 'AX0001'),
+    ('70-80', 'AX0001'),
+    ('80-', 'AX0001'),
+    ('Coupé', 'AX0002'),
+    ('Convertible', 'AX0002'),
+    ('Diesel', 'AX0003'),
+    ('Essence', 'AX0003'),
+    ('60+', 'AX0004'),
+    ('100+', 'AX0004'),
+    ('4 portes', 'AX0005'),
+    ('5 portes', 'AX0005'),
+    ('Standart', 'AX0006'),
+    ('Luxe', 'AX0006'),
+    ('Automatique', 'AX0007'),
+    ('Manuelle', 'AX0007');
+
+insert into axe_values(label, id_axe) values
+  ('Rouge', 'AX0008'),
+  ('Bleau', 'AX0008'),
+  ('Gris', 'AX0008'),
+  ('Violet', 'AX0008'),
+  ('Jaune', 'AX0008');
 
 -- Yaris
 insert into axe_possible_values values
@@ -52,6 +80,9 @@ insert into axe_possible_values values
 ('AXV034','MD0002', 'AX0007', 'Manuelle'),
 ('AXV035','MD0002', 'AX0007', 'Automatique');
 
+
+
+
 -- Sprinter
 insert into axe_possible_values values
 ('AXV036','MD0003', 'AX0001', '200'),
@@ -69,3 +100,6 @@ insert into axe_possible_values values
 ('AXV048','MD0003', 'AX0006', 'Luxe'),
 ('AXV049','MD0003', 'AX0007', 'Manuelle'),
 ('AXV050','MD0003', 'AX0007', 'Automatique');
+
+
+alter table axe_possible_values add column id_value Integer references axe_values(id_value);

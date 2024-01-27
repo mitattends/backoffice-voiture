@@ -23,6 +23,8 @@ public class ModelService {
     ModeleRepository modeleRepository;
     @Autowired
     MarqueRepository marqueRepository;
+    @Autowired
+    AxePossibleValuesService axePossibleValuesService;
     public ModelService(AxePossibleValuesRepository axePossibleValuesRepository){
         this.axePossibleValuesRepository = axePossibleValuesRepository;
     }
@@ -50,9 +52,15 @@ public class ModelService {
 
     public String create(final ModeleDTO modeleDTO) throws Exception {
         final Modele modele = new Modele();
-        mapToEntity(modeleDTO, modele);
-        modele.setIdModele(modeleDTO.getIdModele());
-        return modeleRepository.save(modele).getIdModele();
+        modele.setNom(modeleDTO.getNom());
+        modele.setMarque(marqueRepository.findMarqueByIdMarque(modeleDTO.getMarque()));
+        modele.setIdModele(modeleRepository.getNextSequenceValue());
+
+        modeleRepository.save(modele);
+        modeleDTO.setIdModele(modele.getIdModele());
+        axePossibleValuesService.insertAxePossibleValue(modeleDTO);
+        // save the rest
+        return "succes";
     }
 
     public void update(final String idModele, final ModeleDTO modeleDTO) throws Exception {
