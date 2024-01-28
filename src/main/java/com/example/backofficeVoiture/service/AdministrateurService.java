@@ -1,7 +1,8 @@
-package com.example.backofficeVoiture.models.admin;
+package com.example.backofficeVoiture.service;
 
-import com.example.backofficeVoiture.domain.Modele;
+import com.example.backofficeVoiture.domain.VNombreAnnonceParMoisParAnnee;
 import com.example.backofficeVoiture.model.AdministrateurDTO;
+import com.example.backofficeVoiture.repos.AdministrateurRepository;
 import com.example.backofficeVoiture.util.ApiResponse;
 import com.example.backofficeVoiture.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class AdministrateurService {
         ApiResponse apiResponse = new ApiResponse();
         try{
             new JwtUtil().verify(tokenS);
-            Administrateur administrateur = administrateurDTO.getAdministrateur();
+            VNombreAnnonceParMoisParAnnee.Administrateur administrateur = administrateurDTO.getAdministrateur();
             administrateur.setIdAdministrateur(administrateurRepository.getNextSequenceValue());
             String token = new JwtUtil().generate(administrateur);
             administrateurRepository.save(administrateur);
@@ -32,7 +33,7 @@ public class AdministrateurService {
     public ApiResponse verify(AdministrateurDTO administrateurDTO){
         ApiResponse apiResponse = new ApiResponse();
         try{
-            Administrateur administrateur = administrateurDTO.getAdministrateur();
+            VNombreAnnonceParMoisParAnnee.Administrateur administrateur = administrateurDTO.getAdministrateur();
             System.out.println(administrateurDTO.getEmail());
             System.out.println(administrateurDTO.getMotDePasse());
             administrateur = administrateurRepository.findAdministrateurByEmailAndMotDePasse(administrateurDTO.getEmail(), administrateurDTO.getMotDePasse());

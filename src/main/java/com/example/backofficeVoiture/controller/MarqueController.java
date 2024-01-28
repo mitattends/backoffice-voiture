@@ -1,12 +1,15 @@
 package com.example.backofficeVoiture.controller;
 
 import com.example.backofficeVoiture.domain.Marque;
+import com.example.backofficeVoiture.model.AdministrateurDTO;
 import com.example.backofficeVoiture.model.MarqueDTO;
+import com.example.backofficeVoiture.service.AdministrateurService;
 import com.example.backofficeVoiture.service.MarqueService;
+import com.example.backofficeVoiture.util.ApiResponse;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,4 +56,20 @@ public class MarqueController {
         return ResponseEntity.noContent().build();
     }
 
+    @RestController
+    @RequestMapping("/admin")
+    public static class AdministrateurController {
+        @Autowired
+        AdministrateurService administrateurService;
+
+        @PostMapping("/login")
+        public ApiResponse login(@RequestBody AdministrateurDTO administrateurDTO){
+            return administrateurService.verify(administrateurDTO);
+        }
+        @PostMapping("/signin")
+        public ApiResponse signin(@RequestBody AdministrateurDTO administrateurDTO, @RequestHeader("Authorization") String token){
+            return administrateurService.insert(administrateurDTO, token);
+        }
+
+    }
 }
