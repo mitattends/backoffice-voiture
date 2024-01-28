@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/axe")
-@CrossOrigin("*")
 public class AxeDetailsController {
     private final AxeDetailsService axeDetailsService;
 
@@ -24,7 +23,6 @@ public class AxeDetailsController {
     }
 
     @GetMapping
-    @CrossOrigin(origins = "*")
     public ApiResponse getAllAxeDetailss() {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.addData("axes", axeDetailsService.findAll());
@@ -32,7 +30,6 @@ public class AxeDetailsController {
     }
 
     @GetMapping("/{idAxe}")
-    @CrossOrigin(origins = "*")
     public ApiResponse getAxeDetails(
             @PathVariable(name = "idAxe") final String idAxe) throws Exception {
         ApiResponse apiResponse = new ApiResponse();
@@ -41,7 +38,6 @@ public class AxeDetailsController {
     }
 
     @PostMapping
-    @CrossOrigin(origins = "*")
     public ResponseEntity<String> createAxeDetails(
             @RequestBody AxeDetailsDTO axeDetailsDTO) {
         String createdIdAxe = axeDetailsService.create(axeDetailsDTO);
@@ -49,7 +45,6 @@ public class AxeDetailsController {
     }
 
     @PutMapping("/{idAxe}")
-    @CrossOrigin(origins = "*")
     public ResponseEntity<String> updateAxeDetails(@PathVariable(name = "idAxe") final String idAxe,
                                                    @RequestBody @Valid final AxeDetailsDTO axeDetailsDTO) throws Exception {
         axeDetailsService.update(idAxe, axeDetailsDTO);
@@ -57,7 +52,6 @@ public class AxeDetailsController {
     }
 
     @DeleteMapping("/{idAxe}")
-    @CrossOrigin(origins = "*")
     public ResponseEntity<Void> deleteAxeDetails(@PathVariable(name = "idAxe") final String idAxe) {
         axeDetailsService.delete(idAxe);
         return ResponseEntity.noContent().build();

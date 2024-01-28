@@ -13,18 +13,15 @@ import com.example.backofficeVoiture.util.JwtUtil;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin("*")
 public class AdministrateurController {
     @Autowired
     AdministrateurService administrateurService;
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "*")
     public ApiResponse login(@RequestBody AdministrateurDTO administrateurDTO){
         return administrateurService.verify(administrateurDTO);
     }
     @PostMapping("/signin")
-    @CrossOrigin(origins = "*")
     public ApiResponse signin(@RequestBody AdministrateurDTO administrateurDTO, @RequestHeader("Authorization") String token){
         return administrateurService.insert(administrateurDTO, token);
     }

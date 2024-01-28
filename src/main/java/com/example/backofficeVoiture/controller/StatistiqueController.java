@@ -15,7 +15,6 @@ public class StatistiqueController {
     StatistiqueService statistiqueService;
 
     @GetMapping("/")
-    @CrossOrigin(origins = "*")
     public ApiResponse getStatByYear(@RequestHeader("Authorization") String token){
         // Get the current year
         int currentYear = Year.now().getValue();
@@ -23,29 +22,24 @@ public class StatistiqueController {
     }
 
     @GetMapping("/{year}")
-    @CrossOrigin(origins = "*")
     public ApiResponse getStatByYear(@PathVariable String year, @RequestHeader("Authorization") String token){
         return statistiqueService.getStatAnnonceByYear(year, token);
     }
     @GetMapping("/{year}/marque")
-    @CrossOrigin(origins = "*")
     public ApiResponse getStatMarqueByYear(@PathVariable String year, @RequestHeader("Authorization") String token){
         return statistiqueService.getStatNumberMarqueByYear(year, token);
     }
     @GetMapping("/{year}/modele")
-    @CrossOrigin(origins = "*")
     public ApiResponse getStatModeleByYear(@PathVariable String year, @RequestHeader("Authorization") String token){
         return statistiqueService.getStatNumberModeleByYear(year, token);
     }
 
     @GetMapping("//marque")
-    @CrossOrigin(origins = "*")
     public ApiResponse getStatMarqueByYear2(@RequestHeader("Authorization") String token){
         int currentYear = Year.now().getValue();
         return statistiqueService.getStatNumberMarqueByYear(currentYear+"", token);
     }
     @GetMapping("//modele")
-    @CrossOrigin(origins = "*")
     public ApiResponse getStatModeleByYear2(@RequestHeader("Authorization") String token){
         int currentYear = Year.now().getValue();
         return statistiqueService.getStatNumberModeleByYear(currentYear+"", token);
