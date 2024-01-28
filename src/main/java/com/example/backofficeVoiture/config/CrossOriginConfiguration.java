@@ -7,12 +7,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CrossOriginConfiguration implements WebMvcConfigurer {
     @Override
-    public void addCorsMappings(CorsRegistry registry){
-        System.out.println("Miasa be");
-        registry
-                .addMapping("/**")
-                .allowedMethods("*")
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
                 .allowedOrigins("*")
-                .allowedHeaders("*");
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
     }
 }
