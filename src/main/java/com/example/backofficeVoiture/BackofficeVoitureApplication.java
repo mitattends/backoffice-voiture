@@ -19,7 +19,7 @@ public class BackofficeVoitureApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
+				registry.addMapping("/**").allowedOrigins("https://glistening-conkies-fbbf64.netlify.app");
 			}
 		};
 	}
