@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").
-                        allowedOrigins("http://localhost:3000","https://sweltering-slope-production.up.railway.app");
+                        allowedOrigins("http://localhost:3000","https://glistening-conkies-fbbf64.netlify.app");
             }
         };
     }
