@@ -69,7 +69,7 @@ public class JwtUtil {
         try {
             return Jwts.parser().setSigningKey(key).parseClaimsJws(authorization).getBody();
         } catch (Exception e) {
-            throw new AccessDeniedException("Access Denied");
+            throw new AccessDeniedException("Access Denied "+e.getMessage());
         }
     }
 

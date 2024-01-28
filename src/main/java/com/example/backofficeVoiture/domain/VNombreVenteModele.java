@@ -21,6 +21,7 @@ public class VNombreVenteModele {
     @Column(name = "modele_nom")
     private String modeleNom;
 
+
     public Long getNombre() {
         return nombre;
     }

@@ -17,7 +17,6 @@ public class MarqueController {
 
     private final MarqueService marqueService;
 
-
     public MarqueController(MarqueService marqueService) {
         this.marqueService = marqueService;
     }

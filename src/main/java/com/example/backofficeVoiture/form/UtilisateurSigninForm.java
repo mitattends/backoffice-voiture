@@ -6,11 +6,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UtilisateurSigninForm extends UtilisateurLoginForm{
+
     String nom;
     String prenom;
     String dateNaissance;
     String validationMotDePasse;
-
+    String sexe;
     public void checkPassword() throws Exception {
         System.out.println("1 "+this.password);
         System.out.println("2 "+this.validationMotDePasse);

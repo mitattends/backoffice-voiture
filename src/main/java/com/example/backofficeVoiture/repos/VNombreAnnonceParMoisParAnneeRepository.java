@@ -18,7 +18,7 @@ public interface VNombreAnnonceParMoisParAnneeRepository extends JpaRepository<V
             "         coalesce(v.extract, cast( :target as numeric) ) annee, \n" +
             "         etat \n" +
             "    from v_nombre_annonce_par_mois_par_annee v where v.extract = cast( :target as numeric))\n" +
-            "select coalesce(part1.nombre, 0) nombre , m.id_mois id_mois, m.nom nom, coalesce(part1.annee, cast(:target as numeric)) extract, etat\n" +
-            "from mois m left join part1 on m.id_mois = part1.id_mois",nativeQuery = true)
+            "select sum(coalesce(part1.nombre, 0)) nombre , m.id_mois id_mois, m.nom nom, cast(:target as numeric) extract, 10 etat\n" +
+            "from mois m left join part1 on m.id_mois = part1.id_mois group by m.id_mois , m.nom order by m.id_mois",nativeQuery = true)
     List<VNombreAnnonceParMoisParAnnee> nombreAnnonceParMoisParAnnee(@Param("target") String target);
 }

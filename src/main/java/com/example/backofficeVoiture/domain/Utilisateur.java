@@ -33,6 +33,9 @@ public class Utilisateur {
     @Column(length = 200)
     private String motDePasse;
 
+    @Column
+    Integer sexe;
+
     @OneToMany(mappedBy = "utilisateur")
     @JsonManagedReference
     @JsonIgnore
@@ -127,4 +130,11 @@ public class Utilisateur {
 
     }
 
+    public void setSexe(Integer sexe) {
+        this.sexe = sexe;
+    }
+
+    public Integer getSexe() {
+        return sexe;
+    }
 }

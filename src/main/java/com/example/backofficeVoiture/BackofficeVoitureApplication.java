@@ -14,13 +14,4 @@ public class BackofficeVoitureApplication {
 		SpringApplication.run(BackofficeVoitureApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("https://glistening-conkies-fbbf64.netlify.app");
-			}
-		};
-	}
 }

@@ -17,4 +17,5 @@ public interface VNombreVenteModeleRepository extends JpaRepository<VNombreVente
             "       coalesce(part1.extract, cast (:year as numeric)) extract\n" +
             "       from modele m left join part1 on m.id_modele = part1.id_modele;", nativeQuery = true)
     List<VNombreVenteModele> getNombreVenteParAnneeParModele(@Param("year") String year);
+
 }

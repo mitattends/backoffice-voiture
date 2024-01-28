@@ -69,3 +69,22 @@ from marque m join v_modele_annonce vma
 group by m.id_marque, m.nom, extract(year from date_annonce)
 order by nombre desc
 ;
+
+alter table voiture.public.utilisateur add column sexe Integer  ;
+alter table utilisateur add column date_inscription timestamp default now();
+
+create or replace view v_repartition_utilisateur_sexe as
+    select count(u.id_utilisateur), u.sexe from utilisateur u
+    group by u.sexe;
+
+create or replace view
+    v_nombre_vente_modele_2 as
+select count(id_annonce) nombre,
+       m.id_modele,
+       extract(year from date_annonce),
+       m.nom modele_nom,
+       m.id_marque
+from modele m join  v_modele_annonce vma
+                    on m.id_modele = vma.id_modele
+group by m.id_modele, m.nom, extract(year from date_annonce), m.id_marque
+order by nombre desc ;

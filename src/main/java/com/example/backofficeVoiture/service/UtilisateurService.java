@@ -62,7 +62,8 @@ public class UtilisateurService {
             Utilisateur utilisateur = new Utilisateur();
             utilisateur.setNom(utilisateurSigninForm.getNom());
             utilisateur.setPrenom(utilisateurSigninForm.getPrenom());
-        System.out.println(utilisateurSigninForm.getDateNaissance());
+            utilisateur.setSexe(Integer.valueOf(utilisateurSigninForm.getSexe()));
+            System.out.println(utilisateurSigninForm.getDateNaissance());
           //  utilisateur.setDateNaissance(utilisateurSigninForm.getDateNaissance());
             utilisateur.setEmail(utilisateurSigninForm.getEmail());
             utilisateur.setMotDePasse(utilisateurSigninForm.getValidationMotDePasse());
