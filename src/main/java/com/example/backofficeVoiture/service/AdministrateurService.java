@@ -1,5 +1,6 @@
 package com.example.backofficeVoiture.service;
 
+import com.example.backofficeVoiture.domain.Administrateur;
 import com.example.backofficeVoiture.domain.VNombreAnnonceParMoisParAnnee;
 import com.example.backofficeVoiture.model.AdministrateurDTO;
 import com.example.backofficeVoiture.repos.AdministrateurRepository;
@@ -16,7 +17,7 @@ public class AdministrateurService {
         ApiResponse apiResponse = new ApiResponse();
         try{
             new JwtUtil().verify(tokenS);
-            VNombreAnnonceParMoisParAnnee.Administrateur administrateur = administrateurDTO.getAdministrateur();
+            Administrateur administrateur = administrateurDTO.getAdministrateur();
             administrateur.setIdAdministrateur(administrateurRepository.getNextSequenceValue());
             String token = new JwtUtil().generate(administrateur);
             administrateurRepository.save(administrateur);
@@ -33,7 +34,7 @@ public class AdministrateurService {
     public ApiResponse verify(AdministrateurDTO administrateurDTO){
         ApiResponse apiResponse = new ApiResponse();
         try{
-            VNombreAnnonceParMoisParAnnee.Administrateur administrateur = administrateurDTO.getAdministrateur();
+            Administrateur administrateur = administrateurDTO.getAdministrateur();
             System.out.println(administrateurDTO.getEmail());
             System.out.println(administrateurDTO.getMotDePasse());
             administrateur = administrateurRepository.findAdministrateurByEmailAndMotDePasse(administrateurDTO.getEmail(), administrateurDTO.getMotDePasse());

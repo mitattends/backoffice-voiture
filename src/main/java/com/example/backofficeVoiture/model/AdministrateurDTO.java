@@ -1,5 +1,6 @@
 package com.example.backofficeVoiture.model;
 
+import com.example.backofficeVoiture.domain.Administrateur;
 import com.example.backofficeVoiture.domain.VNombreAnnonceParMoisParAnnee;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ public class AdministrateurDTO {
     String email;
     String motDePasse;
 
-    public VNombreAnnonceParMoisParAnnee.Administrateur getAdministrateur(){
-        return new VNombreAnnonceParMoisParAnnee.Administrateur(this.nom, this.prenom, this.email, this.motDePasse);
+    public Administrateur getAdministrateur(){
+        return new Administrateur(this.nom, this.prenom, this.email, this.motDePasse);
     }
 }

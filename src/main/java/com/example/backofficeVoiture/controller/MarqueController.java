@@ -56,20 +56,5 @@ public class MarqueController {
         return ResponseEntity.noContent().build();
     }
 
-    @RestController
-    @RequestMapping("/admin")
-    public static class AdministrateurController {
-        @Autowired
-        AdministrateurService administrateurService;
 
-        @PostMapping("/login")
-        public ApiResponse login(@RequestBody AdministrateurDTO administrateurDTO){
-            return administrateurService.verify(administrateurDTO);
-        }
-        @PostMapping("/signin")
-        public ApiResponse signin(@RequestBody AdministrateurDTO administrateurDTO, @RequestHeader("Authorization") String token){
-            return administrateurService.insert(administrateurDTO, token);
-        }
-
-    }
 }

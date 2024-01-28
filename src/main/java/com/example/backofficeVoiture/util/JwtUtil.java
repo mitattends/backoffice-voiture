@@ -4,6 +4,7 @@ import java.nio.file.AccessDeniedException;
 import java.security.Key;
 import java.util.Date;
 
+import com.example.backofficeVoiture.domain.Administrateur;
 import com.example.backofficeVoiture.domain.Utilisateur;
 import com.example.backofficeVoiture.domain.VNombreAnnonceParMoisParAnnee;
 import io.jsonwebtoken.Claims;
@@ -37,7 +38,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setClaims(claims).signWith(key).compact();
     }
-    public String generate(VNombreAnnonceParMoisParAnnee.Administrateur admin) {
+    public String generate(Administrateur admin) {
         long milliTime = System.currentTimeMillis();
         long expiryTime = milliTime + expiryDuration * 1000;
 
