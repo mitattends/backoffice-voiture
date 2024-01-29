@@ -13,6 +13,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     @Query(value = "SELECT NEXTVAL('seq_annonce')", nativeQuery = true)
     Long getNextSequenceValue();
     List<Annonce> findAnnonceByUtilisateur(Utilisateur utilisateur);
+    List<Annonce> findAnnonceByUtilisateurIsNot(Utilisateur utilisateur);
     Annonce findAnnonceByIdAnnonceAndUtilisateur(String idAnnonce, Utilisateur utilisateur);
     List<Annonce> findAllByHistoriqueModificationAnnonceUtilisateurs(Utilisateur utilisateur);
 

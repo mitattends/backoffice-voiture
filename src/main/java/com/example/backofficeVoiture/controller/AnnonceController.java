@@ -24,6 +24,11 @@ public class AnnonceController {
         System.out.println("annonce par utilisateur");
         return annonceService.obetnirAnnonces(token);
     }
+    @GetMapping("/{idUser}/annonces")
+    public ApiResponse getAnnonces(@PathVariable String idUser,@RequestHeader("Authorization") String token){
+        System.out.println("annonce par utilisateur");
+        return annonceService.obetnirAnnoncesAutreUtilisateur(token);
+    }
     @PostMapping
     public ApiResponse sendData(@RequestBody AnnonceForm annonceForm,
                                 @RequestHeader("Authorization") String token){
