@@ -7,7 +7,17 @@ public class ApiResponse {
 
     String message;
 
+    String error;
+
     Map<String, Object> data= new HashMap<>();
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getError() {
+        return error;
+    }
 
     public String getMessage() {
         return message;

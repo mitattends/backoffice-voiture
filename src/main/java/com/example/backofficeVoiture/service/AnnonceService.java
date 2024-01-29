@@ -60,6 +60,7 @@ public class AnnonceService {
             apiResponse.addData("pending",annonces);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
 
         return apiResponse;
@@ -86,6 +87,7 @@ public class AnnonceService {
         } catch (Exception e){
             apiResponse.setMessage("something whent wrong");
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -110,6 +112,7 @@ public class AnnonceService {
         } catch (Exception e){
             apiResponse.setMessage("something whent wrong");
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -135,6 +138,7 @@ public class AnnonceService {
         catch (Exception e){
             System.out.println(e);
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -151,6 +155,7 @@ public class AnnonceService {
             apiResponse.addData("models", modeleList);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -167,6 +172,7 @@ public class AnnonceService {
         catch (Exception e){
             apiResponse.setMessage("something went wrong");
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -268,6 +274,7 @@ public class AnnonceService {
         catch (Exception e){
             apiResponse.setMessage("something went wrong");
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }

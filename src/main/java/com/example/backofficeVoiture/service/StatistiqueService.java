@@ -28,6 +28,7 @@ public class StatistiqueService {
             apiResponse.addData("stat", vNombreVenteModeleRepository.getNombreVenteParAnneeParModele(year));
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -39,6 +40,7 @@ public class StatistiqueService {
             apiResponse.addData("stat", vNombreVenteMarqueRepository.getNombreVenteParAnneeParMarque(year));
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -49,6 +51,7 @@ public class StatistiqueService {
             apiResponse.addData("stat", vNombreAnnonceParMoisParAnneeRepository.nombreAnnonceParMoisParAnnee(year));
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }

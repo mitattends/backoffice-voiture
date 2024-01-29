@@ -35,6 +35,7 @@ public class UtilisateurService {
             apiResponse.addData("utilisateur", utilisateur);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -51,6 +52,7 @@ public class UtilisateurService {
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
             apiResponse.setMessage("Wrong password or email");
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -76,6 +78,7 @@ public class UtilisateurService {
         } catch (Exception e){
             System.out.println(e);
              apiResponse.addData("error", e.getMessage());
+             apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }

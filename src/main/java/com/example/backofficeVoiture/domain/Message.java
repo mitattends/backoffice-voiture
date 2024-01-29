@@ -1,6 +1,7 @@
 package com.example.backofficeVoiture.domain;
 
 import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

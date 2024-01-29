@@ -1,23 +1,33 @@
 package com.example.backofficeVoiture.service;
 
 import com.example.backofficeVoiture.domain.Message;
+import com.example.backofficeVoiture.domain.Message;
 import com.example.backofficeVoiture.domain.Utilisateur;
 import com.example.backofficeVoiture.model.MessageDTO;
+import com.example.backofficeVoiture.repos.MessageRepository;
 import com.example.backofficeVoiture.repos.MessageRepository;
 import com.example.backofficeVoiture.repos.UtilisateurRepository;
 import com.example.backofficeVoiture.util.ApiResponse;
 import com.example.backofficeVoiture.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 @Service
 public class MessageService {
+
     @Autowired
     MessageRepository messageRepository;
     @Autowired
     UtilisateurRepository utilisateurRepository;
+    @Autowired
+    MongoOperations mongoOperations;
+
+    public List<Message> messageMongos(){
+        return messageRepository.findAll();
+    }
 
     public ApiResponse getNotReadMessage(String idUser, String token){
         ApiResponse apiResponse = new ApiResponse();
@@ -28,6 +38,7 @@ public class MessageService {
             apiResponse.addData("notification", messageDTOS);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -43,11 +54,13 @@ public class MessageService {
             apiResponse.addData("envoye", mapListMessage(messageEnvoye));
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
     public ApiResponse saveMessage(MessageDTO messageDTO, String token){
         ApiResponse apiResponse = new ApiResponse();
+        System.out.println("sendinnng");
         try {
             Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
             Message message = mapDTOtoEntity(messageDTO);
@@ -55,6 +68,7 @@ public class MessageService {
             messageRepository.save(message);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return new ApiResponse();
     }
@@ -84,7 +98,6 @@ public class MessageService {
         messageDTO.setIdEnvoyeur(message.getIdSender());
         messageDTO.setMessage(message.getMessage());
         messageDTO.setDateEnvoie(message.getDateEnvoie().toString());
-       // messageDTO.setDateEnvoie(message.getDateEnvoie().toString());
         messageDTO.setNomEnvoyeur(utilisateurRepository.findUtilisateurByIdUtilisateur(message.getIdSender()).getNom());
         messageDTO.setNomReceveur(utilisateurRepository.findUtilisateurByIdUtilisateur(message.getIdReceiver()).getNom());
         return messageDTO;

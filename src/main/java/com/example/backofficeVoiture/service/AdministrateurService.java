@@ -27,6 +27,7 @@ public class AdministrateurService {
         }catch (Exception e){
             apiResponse.setMessage("Something went wrong");
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
@@ -47,6 +48,7 @@ public class AdministrateurService {
         }catch (Exception e){
             apiResponse.setMessage("error");
             apiResponse.addData("error", e.getMessage());
+            apiResponse.setError(e.getMessage());
         }
         return apiResponse;
     }
