@@ -16,6 +16,7 @@ public class AuthentificationController {
     UtilisateurService utilisateurService;
     @PostMapping("/login")
     public ApiResponse login(@RequestBody UtilisateurLoginForm utilisateurLoginForm){
+        System.out.println("Tentative de log de tsy mis à jour le projet");
         return utilisateurService.login(utilisateurLoginForm);
     }
     @PostMapping("/signin")

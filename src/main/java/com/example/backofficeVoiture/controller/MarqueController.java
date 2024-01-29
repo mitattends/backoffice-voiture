@@ -36,24 +36,21 @@ public class MarqueController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createMarque(@RequestBody @Valid final MarqueDTO marqueDTO, @RequestHeader("Authorization") String token) throws Exception {
-        final String createdIdMarque = marqueService.create(marqueDTO, token);
-        return new ResponseEntity<>(createdIdMarque, HttpStatus.CREATED);
+    public ApiResponse createMarque(@RequestBody @Valid final MarqueDTO marqueDTO, @RequestHeader("Authorization") String token) throws Exception {
+        return marqueService.create(marqueDTO, token);
     }
 
     @PutMapping("/{idMarque}")
-    public ResponseEntity<String> updateMarque(
+    public ApiResponse updateMarque(
             @PathVariable(name = "idMarque") final String idMarque,
-            @RequestBody @Valid final MarqueDTO marqueDTO) throws Exception {
-        marqueService.update(idMarque, marqueDTO);
-        return ResponseEntity.ok(idMarque);
+            @RequestBody @Valid final MarqueDTO marqueDTO, @RequestHeader("Authorization") String token) throws Exception {
+        return marqueService.update(idMarque, marqueDTO, token);
     }
 
     @DeleteMapping("/{idMarque}")
-    public ResponseEntity<Void> deleteMarque(
-            @PathVariable(name = "idMarque") final String idMarque) {
-        marqueService.delete(idMarque);
-        return ResponseEntity.noContent().build();
+    public ApiResponse deleteMarque(
+            @PathVariable(name = "idMarque") final String idMarque, @RequestHeader("Authorization") String token) {
+        return marqueService.delete(idMarque, token);
     }
 
 

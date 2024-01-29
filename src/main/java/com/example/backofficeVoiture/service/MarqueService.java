@@ -3,6 +3,7 @@ package com.example.backofficeVoiture.service;
 import com.example.backofficeVoiture.domain.Marque;
 import com.example.backofficeVoiture.model.MarqueDTO;
 import com.example.backofficeVoiture.repos.MarqueRepository;
+import com.example.backofficeVoiture.util.ApiResponse;
 import com.example.backofficeVoiture.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,23 +24,43 @@ public class MarqueService {
                 .orElseThrow(Exception::new);
     }
 
-    public String create(final MarqueDTO marqueDTO, String token) throws Exception {
-        new JwtUtil().verify(token);
-        final Marque marque = new Marque();
-        mapToEntity(marqueDTO, marque);
-        marque.setIdMarque(marqueRepository.getNextSequenceValue());
-        return marqueRepository.save(marque).getIdMarque();
+    public ApiResponse create(final MarqueDTO marqueDTO, String token) throws Exception {
+        ApiResponse apiResponse = new ApiResponse();
+        try{
+            new JwtUtil().verify(token);
+            final Marque marque = new Marque();
+            mapToEntity(marqueDTO, marque);
+            marque.setIdMarque(marqueRepository.getNextSequenceValue());
+            marqueRepository.save(marque).getIdMarque();
+        }catch (Exception e){
+            apiResponse.addData("error", e.getMessage());
+        }
+        return apiResponse;
     }
 
-    public void update(final String idMarque, final MarqueDTO marqueDTO) throws Exception {
-        final Marque marque = marqueRepository.findById(idMarque)
-                .orElseThrow(Exception::new);
-        mapToEntity(marqueDTO, marque);
-        marqueRepository.save(marque);
+    public ApiResponse update(final String idMarque, final MarqueDTO marqueDTO, String token) throws Exception {
+        ApiResponse apiResponse = new ApiResponse();
+        try{
+            new JwtUtil().verify(token);
+            final Marque marque = marqueRepository.findById(idMarque)
+                    .orElseThrow(Exception::new);
+            mapToEntity(marqueDTO, marque);
+            marqueRepository.save(marque);
+        }catch (Exception e){
+            apiResponse.addData("error", e.getMessage());
+        }
+        return apiResponse;
     }
 
-    public void delete(final String idMarque) {
-        marqueRepository.deleteById(idMarque);
+    public ApiResponse delete(final String idMarque, String token) {
+        ApiResponse apiResponse = new ApiResponse();
+        try{
+            new JwtUtil().verify(token);
+            marqueRepository.deleteById(idMarque);
+        }catch (Exception e){
+            apiResponse.addData("error", e.getMessage());
+        }
+        return apiResponse;
     }
 
     private MarqueDTO mapToDTO(final Marque marque, final MarqueDTO marqueDTO) {
