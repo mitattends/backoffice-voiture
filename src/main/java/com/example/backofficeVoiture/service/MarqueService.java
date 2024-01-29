@@ -32,6 +32,7 @@ public class MarqueService {
             mapToEntity(marqueDTO, marque);
             marque.setIdMarque(marqueRepository.getNextSequenceValue());
             marqueRepository.saveAndFlush(marque);
+            apiResponse.setMessage("Succes");
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
             apiResponse.setError(e.getMessage());

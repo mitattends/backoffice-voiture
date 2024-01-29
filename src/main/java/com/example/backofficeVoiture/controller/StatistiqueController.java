@@ -23,6 +23,7 @@ public class StatistiqueController {
 
     @GetMapping("/{year}")
     public ApiResponse getStatByYear(@PathVariable String year, @RequestHeader("Authorization") String token){
+        System.out.println("maka stat");
         return statistiqueService.getStatAnnonceByYear(year, token);
     }
     @GetMapping("/{year}/marque")
