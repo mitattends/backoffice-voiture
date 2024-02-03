@@ -2,21 +2,24 @@ package com.example.backofficeVoiture.service;
 
 import com.example.backofficeVoiture.domain.*;
 import com.example.backofficeVoiture.form.AnnonceForm;
+import com.example.backofficeVoiture.form.AnnonceFormSearch;
 import com.example.backofficeVoiture.model.AnnonceDTO;
 import com.example.backofficeVoiture.model.AnnonceUpdateDTO;
 import com.example.backofficeVoiture.repos.*;
-import com.example.backofficeVoiture.response.AnnonceFormData;
 import com.example.backofficeVoiture.util.ApiResponse;
 import com.example.backofficeVoiture.util.JwtUtil;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUtil;
 import java.nio.file.AccessDeniedException;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +43,52 @@ public class AnnonceService {
     UtilisateurService utilisateurService;
     @Autowired
     UtilisateurRepository utilisateurRepository;
+   public ApiResponse searchAnnonce(AnnonceFormSearch annonceFormSearch){
+        ApiResponse apiResponse = new ApiResponse();
+        System.out.println("search");
+        try{
+            String sqlValues = annonceFormSearch.sqlValues();
+            String sql = "with valeur_to_table as ( " +
+                    "             select regexp_split_to_table('"+sqlValues+"', ',') as valeur ) " +
+                    "             select " +
+                    "                    a.id_annonce, " +
+                    "                    a.annee, " +
+                    "                    a.kilometrage, " +
+                    "                    a.date_annonce, " +
+                    "                    a.description, " +
+                    "                    a.etat, " +
+                    "                    a.id_utilisateur, " +
+                    "                    a.prix, " +
+                    "                    count(dm.id_annonce) nombre " +
+                    "                    from details_modele dm " +
+                    "                 join valeur_to_table vtb " +
+                    "                     on dm.value=vtb.valeur " +
+                    "                 join annonce a " +
+                    "                     on dm.id_annonce = a.id_annonce " +
+                    "                 where a.prix::Integer between "+annonceFormSearch.getPrixInf()+" and "+annonceFormSearch.getPrixSup()+" " +
+                    "                 and a.annee::Integer between "+annonceFormSearch.getAnneeInf()+" and "+annonceFormSearch.getAnneeSup()+" " +
+                    "                 group by a.id_annonce order by nombre ";
+
+            System.out.println(sql);
+            java.util.List<Annonce> annonces = annonceRepository.findAnnoncesBySearchParameters(
+                    sqlValues, Integer.valueOf(
+                    annonceFormSearch.getPrixInf()),
+                    Integer.valueOf(
+                    annonceFormSearch.getPrixSup()),
+                    Integer.valueOf(
+                    annonceFormSearch.getAnneeInf()),
+                    Integer.valueOf(
+                    annonceFormSearch.getAnneeSup())
+            );
+                    //annonceRepository.executeListAnnonceSql(sql);//entityManager.createNativeQuery(sql, Annonce.class).getResultList();
+            apiResponse.addData("annonces", annonces);
+        }catch (Exception e){
+            e.printStackTrace();
+            apiResponse.addData("error", e.getMessage());
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
 
     public ApiResponse getPendingAnnonce(String etat, String token){
         ApiResponse apiResponse = new ApiResponse();
@@ -65,6 +114,52 @@ public class AnnonceService {
         return apiResponse;
     }
 
+    public ApiResponse obetnirAnnonces(String a, String b, String etat){
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            List<Annonce> annonces = annonceRepository.findAnnonceBetween(a, b);
+            for (Annonce annonce: annonces){
+                annonce.setOwnerId(annonce.getUtilisateur().getIdUtilisateur());
+                for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
+                    AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
+                    try{
+                        detailsModele.setAxePossibleValues(axePossibleValues);
+                    }catch (Exception e){
+                        detailsModele.setAxePossibleValues(new AxePossibleValues());
+                    }
+                }
+            }
+            apiResponse.addData("annonces", annonces);
+            apiResponse.setMessage("success");
+        } catch (Exception e){
+            apiResponse.setMessage("something whent wrong");
+            apiResponse.addData("error", e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse obetnirAnnonces(){
+        ApiResponse apiResponse = new ApiResponse();
+        try {
+            List<Annonce> annonces = annonceRepository.findAll();
+            for (Annonce annonce: annonces){
+                for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
+                    AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
+                    try{
+                        detailsModele.setAxePossibleValues(axePossibleValues);
+                    }catch (Exception e){
+                        detailsModele.setAxePossibleValues(new AxePossibleValues());
+                    }
+                }
+            }
+            apiResponse.addData("annonces", annonces);
+            apiResponse.setMessage("success");
+        } catch (Exception e){
+            apiResponse.setMessage("something whent wrong");
+            apiResponse.addData("error", e.getMessage());
+        }
+        return apiResponse;
+    }
     public ApiResponse obetnirAnnonces(String token){
         ApiResponse apiResponse = new ApiResponse();
         try {
@@ -73,7 +168,6 @@ public class AnnonceService {
             List<Annonce> annonces = annonceRepository.findAnnonceByUtilisateur(utilisateur);
             for (Annonce annonce: annonces){
                 for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
-                  //  System.out.println(detailsModele.getValue());
                     AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
                     try{
                         detailsModele.setAxePossibleValues(axePossibleValues);
@@ -94,16 +188,18 @@ public class AnnonceService {
         System.out.println("insertion d'annonce");
         ApiResponse apiResponse = new ApiResponse();
         try{
-        //    annonceForm.controlData();
             Annonce annonce = new Annonce();
             annonce.setIdAnnonce(annonceRepository.getNextSequenceValue());
             annonce.setAnnee(annonceForm.getAnnee());
             annonce.setKilometrage(annonceForm.getKilometrage());
             annonce.setDescription(annonceForm.getDescription());
             annonce.setEtat(10);
+            annonce.setPrix(annonceForm.getPrix());
+
             Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
             utilisateur = utilisateurService.getUserById(utilisateur.getIdUtilisateur());
             annonce.setUtilisateur(utilisateur);
+            annonce.setDateAnnonce(OffsetDateTime.now());
             annonceRepository.save(annonce);
             photoService.insertMultiplePhoto(annonceForm, annonce);
             detailsModelService.insert(annonceForm, annonce);

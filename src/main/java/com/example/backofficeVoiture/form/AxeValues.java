@@ -16,4 +16,8 @@ public class AxeValues implements Serializable {
         this.index = index;
         this.value = value;
     }
+
+    public String sqlValue(){
+        return value;
+    }
 }

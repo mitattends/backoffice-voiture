@@ -51,6 +51,7 @@ public class UtilisateurService {
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
             apiResponse.setMessage("Wrong password or email");
+
         }
         return apiResponse;
     }

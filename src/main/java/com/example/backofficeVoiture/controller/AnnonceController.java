@@ -1,6 +1,7 @@
 package com.example.backofficeVoiture.controller;
 
 import com.example.backofficeVoiture.form.AnnonceForm;
+import com.example.backofficeVoiture.form.AnnonceFormSearch;
 import com.example.backofficeVoiture.model.AnnonceUpdateDTO;
 import com.example.backofficeVoiture.service.AnnonceService;
 import com.example.backofficeVoiture.util.ApiResponse;
@@ -15,6 +16,11 @@ public class AnnonceController {
 
     @Autowired
     AnnonceService annonceService;
+    @GetMapping("/{a}/{b}")
+    public ApiResponse getAllAnnonce(@PathVariable("a") String a,
+                                     @PathVariable("b") String b) {
+        return annonceService.obetnirAnnonces(a, b, 20+"");
+    }
     @GetMapping
     public ApiResponse getData(@RequestHeader("Authorization") String token) throws AccessDeniedException {
         return annonceService.annonceFormData(token);
@@ -49,6 +55,11 @@ public class AnnonceController {
     public ApiResponse valider(@RequestBody AnnonceUpdateDTO annonceUpdateDTO,
                                      @RequestHeader("Authorization") String token){
         return annonceService.validerAnnonce(annonceUpdateDTO, token);
+    }
+
+    @PostMapping("/search")
+    public ApiResponse rechercheAvance(@RequestBody AnnonceFormSearch annonceFormSearch){
+        return annonceService.searchAnnonce(annonceFormSearch);
     }
 
 }

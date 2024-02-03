@@ -23,6 +23,18 @@ public class Photo {
     @JsonBackReference
     private Annonce annonce;
 
+    @Basic
+    @Column(name = "field_bytes")
+    byte[] fieldBytes;
+
+    public void setFieldBytes(byte[] fieldBytes) {
+        this.fieldBytes = fieldBytes;
+    }
+
+    public byte[] getFieldBytes() {
+        return fieldBytes;
+    }
+
     public Photo(int idPhoto, String text, Annonce annonce) {
         this.setIdPhoto(idPhoto);
         setText(text);

@@ -33,6 +33,11 @@ public class Annonce {
     @Column
     private Integer etat;
 
+    @Column
+    private Double prix;
+
+    @Column
+    private Double nombre;
 /*    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_modele")
     private Modele modele;
@@ -42,10 +47,20 @@ public class Annonce {
     @JsonBackReference
     private Utilisateur utilisateur;
 
-
     @OneToMany(mappedBy = "annonce")
     @JsonManagedReference
     private Set<DetailsModele> annonceDetailsModeles;
+
+    @Transient
+    String ownerId;
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
 
     @ManyToMany
     @JoinTable(
@@ -162,5 +177,29 @@ public class Annonce {
         catch (Exception e){
             throw e;
         }
+    }
+
+
+    public void setPrix(String prix) throws Exception{
+        try{
+            this.setPrix(Double.valueOf(prix));
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+    public void setPrix(Double prix) {
+        this.prix = prix;
+    }
+
+    public Double getPrix() {
+        return prix;
+    }
+
+    public void setNombre(Double nombre) {
+        this.nombre = nombre;
+    }
+
+    public Double getNombre() {
+        return nombre;
     }
 }
