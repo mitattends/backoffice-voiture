@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -32,4 +33,10 @@ public interface AnnonceRepository extends JpaRepository<Annonce, String> {
     @Query(value = "WITH valeur_to_table AS (SELECT regexp_split_to_table(:sqlValues, ',') AS valeur) SELECT a.id_annonce, a.annee, a.kilometrage, a.date_annonce, a.description, a.etat, a.id_utilisateur, a.prix, COUNT(dm.id_annonce) nombre FROM details_modele dm JOIN valeur_to_table vtb ON dm.value=vtb.valeur JOIN annonce a ON dm.id_annonce = a.id_annonce WHERE a.prix::INTEGER BETWEEN :prixInf AND :prixSup AND a.annee::INTEGER BETWEEN :anneeInf AND :anneeSup GROUP BY a.id_annonce ORDER BY nombre", nativeQuery = true)
     List<Annonce> findAnnoncesBySearchParameters(@Param("sqlValues") String sqlValues, @Param("prixInf") Integer prixInf, @Param("prixSup") Integer prixSup, @Param("anneeInf") Integer anneeInf, @Param("anneeSup") Integer anneeSup);
 
+    @Query(value = "with part1 as (select count(id_modele) as nombre, cast(id_modele as varchar) from axe_possible_values where id_value in " +
+            "                                  ('4','7','9','11','13','17')" +
+            "    group by id_modele order by nombre desc)" +
+            "   select distinct a.* from details_modele dm join part1 on part1.id_modele=dm.id_modele" +
+            "   join annonce a on dm.id_annonce = a.id_annonce ", nativeQuery = true)
+    List<Annonce> findModeleByIdValue(@Param("sql") String sql);
 }

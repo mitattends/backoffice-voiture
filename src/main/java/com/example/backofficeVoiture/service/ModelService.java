@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,6 +27,10 @@ public class ModelService {
     MarqueRepository marqueRepository;
     @Autowired
     AxePossibleValuesService axePossibleValuesService;
+    public HashMap<Integer, String> findModeleBySqlValues(String sql){
+        return modeleRepository.findModeleByIdValue(sql);
+    }
+
     public ModelService(AxePossibleValuesRepository axePossibleValuesRepository){
         this.axePossibleValuesRepository = axePossibleValuesRepository;
     }

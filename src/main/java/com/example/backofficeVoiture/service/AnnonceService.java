@@ -19,6 +19,7 @@ import java.nio.file.AccessDeniedException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,44 +44,19 @@ public class AnnonceService {
     UtilisateurService utilisateurService;
     @Autowired
     UtilisateurRepository utilisateurRepository;
+
+    @Autowired
+    ModelService modelService;
+
    public ApiResponse searchAnnonce(AnnonceFormSearch annonceFormSearch){
         ApiResponse apiResponse = new ApiResponse();
         System.out.println("search");
         try{
             String sqlValues = annonceFormSearch.sqlValues();
-            String sql = "with valeur_to_table as ( " +
-                    "             select regexp_split_to_table('"+sqlValues+"', ',') as valeur ) " +
-                    "             select " +
-                    "                    a.id_annonce, " +
-                    "                    a.annee, " +
-                    "                    a.kilometrage, " +
-                    "                    a.date_annonce, " +
-                    "                    a.description, " +
-                    "                    a.etat, " +
-                    "                    a.id_utilisateur, " +
-                    "                    a.prix, " +
-                    "                    count(dm.id_annonce) nombre " +
-                    "                    from details_modele dm " +
-                    "                 join valeur_to_table vtb " +
-                    "                     on dm.value=vtb.valeur " +
-                    "                 join annonce a " +
-                    "                     on dm.id_annonce = a.id_annonce " +
-                    "                 where a.prix::Integer between "+annonceFormSearch.getPrixInf()+" and "+annonceFormSearch.getPrixSup()+" " +
-                    "                 and a.annee::Integer between "+annonceFormSearch.getAnneeInf()+" and "+annonceFormSearch.getAnneeSup()+" " +
-                    "                 group by a.id_annonce order by nombre ";
-
-            System.out.println(sql);
-            java.util.List<Annonce> annonces = annonceRepository.findAnnoncesBySearchParameters(
-                    sqlValues, Integer.valueOf(
-                    annonceFormSearch.getPrixInf()),
-                    Integer.valueOf(
-                    annonceFormSearch.getPrixSup()),
-                    Integer.valueOf(
-                    annonceFormSearch.getAnneeInf()),
-                    Integer.valueOf(
-                    annonceFormSearch.getAnneeSup())
-            );
-                    //annonceRepository.executeListAnnonceSql(sql);//entityManager.createNativeQuery(sql, Annonce.class).getResultList();
+            System.out.println("key for join "+sqlValues);
+      //      HashMap<Integer, String> countModeleValue = modelService.findModeleBySqlValues(sqlValues);
+            List<Annonce> annonces = annonceRepository.findModeleByIdValue(sqlValues);
+            fetchAnnonceData(annonces);
             apiResponse.addData("annonces", annonces);
         }catch (Exception e){
             e.printStackTrace();
@@ -95,17 +71,7 @@ public class AnnonceService {
         try{
             new JwtUtil().verify(token);
             List<Annonce> annonces =  annonceRepository.findAnnonceByEtat(Integer.valueOf(etat));
-            for (Annonce annonce: annonces){
-                for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
-                    //System.out.println(detailsModele.getValue());
-                    AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
-                    try{
-                        detailsModele.setAxePossibleValues(axePossibleValues);
-                    }catch (Exception e){
-                        detailsModele.setAxePossibleValues(new AxePossibleValues());
-                    }
-                }
-            }
+            fetchAnnonceData(annonces);
             apiResponse.addData("pending",annonces);
         }catch (Exception e){
             apiResponse.addData("error", e.getMessage());
@@ -343,5 +309,17 @@ public class AnnonceService {
             apiResponse.addData("error", e.getMessage());
         }
         return apiResponse;
+    }
+    public void fetchAnnonceData(List<Annonce> annonces){
+        for (Annonce annonce: annonces){
+            for (DetailsModele detailsModele : annonce.getAnnonceDetailsModeles()){
+                AxePossibleValues axePossibleValues = axePossibleValuesRepository.getReferenceById(detailsModele.getValue());
+                try{
+                    detailsModele.setAxePossibleValues(axePossibleValues);
+                }catch (Exception e){
+                    detailsModele.setAxePossibleValues(new AxePossibleValues());
+                }
+            }
+        }
     }
 }

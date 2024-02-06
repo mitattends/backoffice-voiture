@@ -57,7 +57,7 @@ public class AnnonceController {
         return annonceService.validerAnnonce(annonceUpdateDTO, token);
     }
 
-    @PostMapping("/search")
+    @PostMapping("/find")
     public ApiResponse rechercheAvance(@RequestBody AnnonceFormSearch annonceFormSearch){
         return annonceService.searchAnnonce(annonceFormSearch);
     }

@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class AxeValues implements Serializable {
+
     public String index;
     public String value;
 
