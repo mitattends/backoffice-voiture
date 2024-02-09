@@ -9,7 +9,7 @@ public class CrossOriginConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://glistening-conkies-fbbf64.netlify.app", "http://localhost:3000", "http://localhost:8100")
+                .allowedOrigins("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
     }
 }
