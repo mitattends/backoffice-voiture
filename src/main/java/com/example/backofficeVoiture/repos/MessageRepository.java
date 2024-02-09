@@ -25,7 +25,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
     @Query(value = "with last_message_id as\n" +
             "    (select max (message.id_message) id_message, id_receiver from\n" +
             "        message where id_receiver = :idUser\n" +
-            "                group by id_annonce, id_sender\n" +
+            "                group by id_annonce, id_sender, id_receiver\n" +
             "    )\n" +
             "    select\n" +
             "        message.id_message, id_sender, message.id_receiver, message, date_envoie, date_reception, date_vue, id_annonce\n" +

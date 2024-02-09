@@ -36,6 +36,7 @@ public class MessageService {
         ApiResponse apiResponse = new ApiResponse();
         try {
             Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
+            System.out.println(utilisateur.getEmail());
             List<Message> messages = messageRepository.findMessageByIdReceiverAndDateReceptionIsNull(idUser);
             List<MessageDTO> messageDTOS = mapListMessage(messages);
             apiResponse.addData("notification", messageDTOS);
@@ -72,15 +73,14 @@ public class MessageService {
     }
 
     public ApiResponse getMessage(String idUser, String token){
-        System.out.println("LASA");
         ApiResponse apiResponse = new ApiResponse();
         try{
-            Utilisateur utilisateur = new JwtUtil().findUserByToken(token);
+            Utilisateur utilisateur = utilisateurRepository.findUtilisateurByIdUtilisateur(idUser);
            // if(utilisateur.getIdUtilisateur() != idUser) throw new Exception("Id user and token doesn't match");
             List<Message> messageRecu =  messageRepository.myMessage(utilisateur.getIdUtilisateur());
             for (Message m : messageRecu){
                 m.setAnnonce(annonceRepository.findAnnonceByIdAnnonce(m.getIdAnnonce()));
-                System.out.println(m.getAnnonce().getDescription());
+            //    System.out.println(m.getAnnonce().getDescription());
             }
             //List<Message> messageEnvoye = messageRepository.findMessageByIdSender(utilisateur.getIdUtilisateur());
             apiResponse.addData("recu", mapListMessage(messageRecu));

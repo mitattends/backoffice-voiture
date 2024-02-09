@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUtil;
+import javax.transaction.Transactional;
 import java.nio.file.AccessDeniedException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -53,8 +54,6 @@ public class AnnonceService {
         System.out.println("search");
         try{
             String sqlValues = annonceFormSearch.sqlValues();
-            System.out.println("key for join "+sqlValues);
-      //      HashMap<Integer, String> countModeleValue = modelService.findModeleBySqlValues(sqlValues);
             List<Annonce> annonces = annonceRepository.findModeleByIdValue(sqlValues);
             fetchAnnonceData(annonces);
             apiResponse.addData("annonces", annonces);
@@ -150,8 +149,8 @@ public class AnnonceService {
         }
         return apiResponse;
     }
+    @Transactional
     public ApiResponse insererAnnonce(AnnonceForm annonceForm, String token){
-        System.out.println("insertion d'annonce");
         ApiResponse apiResponse = new ApiResponse();
         try{
             Annonce annonce = new Annonce();
